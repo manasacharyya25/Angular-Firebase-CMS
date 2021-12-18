@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,700;1,400&family=Libre+Franklin:wght@100&family=Playfair+Display+SC:wght@400;700&display=swap');
+
+@mixin breakpoint($point) {
+    @if $point == desktop {
+      @media (min-width: 70em) { @content ; }
+   }
+    @else if $point == laptop {
+      @media (min-width: 64em) { @content ; }
+   }
+     @else if $point == tablet {
+      @media (min-width: 50em) { @content ; }
+   }
+    @else if $point == phablet {
+      @media (min-width: 37.5em)  { @content ; }
+   }
+   @else if $point == mobileonly {
+      @media (max-width: 37.5em)  { @content ; }
+ 
+   }
+ }
+
+ .mobile_only {
+    @include breakpoint(phablet) {
+		display: none;
+	}
+ }
+
+ .non_mobile_devices {
+    @include breakpoint(mobileonly) {
+		display: none;
+	}
+ }
+
+ html {
+    font-size: 100%;
+    box-sizing: border-box;
+ }
+
+ *, *::before, *::after {
+    box-sizing: inherit;
+ }
+
+ body {
+    margin: 0;
+    padding: 0;
+   line-height: 1.3;
+ }

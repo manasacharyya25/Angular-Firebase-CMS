@@ -1,0 +1,425 @@
+.homepage {
+    width: 100%;
+    height: auto;
+    background-color: #222222;
+}
+
+.homepage-heroimage-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.homepage-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 50px;
+}
+
+.homepage-banner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 1;
+}
+
+.name-and-slogan {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 1%;
+}
+
+.name {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    text-transform: capitalize;
+}
+
+.slogan {
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    color: #000000;
+}
+
+.homepage-navbar {
+    width: 80vw;
+    height: 5vw;
+    background: #FFFFFF;
+    border: 1px solid #CC4C4C;
+    border-radius: 5px;
+    z-index: 1;
+    display: flex;
+    margin-top: 3vh;
+    align-self: center;
+    justify-content: space-between;
+}
+
+.navbar-link {
+    font-family: 'Libre Franklin', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5vw;
+    line-height: 2vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #CC4C4C;
+    display: flex;
+    align-items: center;
+    padding:0px 1vw;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+        background-color: #222222;
+        color: #FFFFFF
+    }
+}
+
+.homepgae-mid-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 16vw;
+    width: 100%;
+    height: 25vw;
+    position: relative;
+    z-index: 1;
+}
+
+.hmmessage-container {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    height: 80%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    color: #434343;
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 300;
+    font-size: 1.3vw;
+    line-height: 1.3vw;
+}
+
+.hm-header {
+    background-color: #222222;
+    width: inherit;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    color: white;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    text-transform: capitalize;
+}
+
+.news-header {
+    background-color: #222222;
+    width: inherit;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    color: white;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    text-transform: capitalize;
+}
+
+.continue-reading {
+    font-family: Libre Franklin;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.3vw;
+    line-height: 1.3vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color:#26866d;
+    cursor: pointer;
+}
+
+.news-marquee {
+    display: flex;
+    flex-direction: column;
+    height: 10vw;
+    width: 30vw;
+    align-self: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.news {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    height: 6vw;
+    width: 85%;
+    margin-bottom: 1vw;
+    padding: 5px 10px;
+}
+
+.news-header {
+    display: flex;
+    flex-direction: rows;
+    justify-content: space-between;
+    width: 100%;
+    background-color: inherit ;
+    height: 3vw;
+}
+
+.news-title {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1vw;
+    line-height: 1vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: black
+}
+
+.news-date {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #7D7D7D;
+}
+
+.news-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1vw;
+    line-height: 1vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    overflow: hidden;
+}
+
+.homepage-toppost {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 30vw;
+    margin-top:8vw;
+    position: relative;
+    z-index: 1;
+}
+
+.toppost-box {
+    display: flex;
+    width: 80vw;
+    height: 100%;
+
+    &:hover {
+        filter: brightness(110%);
+        cursor: pointer;
+    }
+}
+
+.red-bar {
+    width: 1px;
+    height: inherit;
+    background-color:#CC4C4C;
+}
+
+.green-bar {
+    width: 1px;
+    height: inherit;
+    background-color:#23C56D;
+}
+
+.violet-bar {
+    width: 1px;
+    height: inherit;
+    background-color:#8B62FF;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.post-header {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #FFFFFF;
+    margin: 1vw;
+}
+
+.post-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 1.3vw;
+    line-height: 1.3vw;
+    letter-spacing: 0.05em;
+    text-align: justify;
+    text-transform: capitalize;
+    color: #FFFFFF;
+    margin: 1vw;
+}
+
+.homepage-comittee {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5vw;
+    min-height: 10vw;
+    position: relative;
+    z-index: 1;
+    background-color:white;
+    padding: 10px 50px;
+
+    
+}
+
+.comittee-header {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #585858;
+}
+
+.comittee-list {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1vw;
+}
+
+.member {
+    margin-right: 1vw;
+}
+
+.member-pic {
+    border-radius: 100%;
+}
+
+.homepage-bottom-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px 50px;
+    width: 100%;
+    height:40vw;
+    background-color: #222222;
+}
+
+.news-marquee-1 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 70vw;
+    align-self: flex-end;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 7vw;
+}
+
+.red-bar-1 {
+    width: 1px;
+    height: 100%;
+    background-color: #CC4C4C;
+    margin-right: 7vw;
+}
+
+
+
+.address {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.5vw;
+    line-height: 1.5vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #FFFFFF;
+    width: 80%;
+    margin-bottom: 1vw;
+}
+
+.social-links {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin-top: 1vw;
+    padding: 0 1vw;
+}
+
+.social-links > img {
+    cursor: pointer;
+}
+
+.footer {
+    width: 100%;
+    height: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #051120;
+    border-top: 10px solid #123962;
+    position: relative;
+    z-index: 1;
+}
+
+.terms-of-use {
+    font-family: Roboto;
+    font-size: 1.3vw;
+    color: white;
+}
+
+.copyright {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: Roboto;
+    font-size: 1vw;
+    color: #51565f;
+}
+
+.copyright > span {
+    margin-right: 1vw;
+}
