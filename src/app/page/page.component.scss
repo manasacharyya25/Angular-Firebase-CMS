@@ -88,22 +88,12 @@
     }
 }
 
-.homepgae-mid-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-top: 16vw;
-    width: 100%;
-    height: 25vw;
-    position: relative;
-    z-index: 1;
-}
-
 .hmmessage-container {
     display: flex;
+    align-self: center;
     flex-direction: column;
-    width: 40vw;
-    height: 80%;
+    width: 80vw;
+    min-height: 50vw;
     background-color: white;
     border-radius: 0 0 10px 10px;
     color: #434343;
@@ -111,6 +101,9 @@
     font-weight: 300;
     font-size: 1.3vw;
     line-height: 1.3vw;
+    position: relative;
+    z-index: 1;
+    margin-top: 5vw;
 }
 
 .hm-header {
@@ -119,24 +112,6 @@
     height: 5vw;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: Playfair Display SC;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2vw;
-    line-height: 2vw;
-    color: white;
-    text-align: justify;
-    letter-spacing: 0.095em;
-    text-transform: capitalize;
-}
-
-.news-header {
-    background-color: #222222;
-    width: inherit;
-    height: 5vw;
-    display: flex;
-    align-items: center;
     justify-content: flex-start;
     font-family: Playfair Display SC;
     font-style: normal;
@@ -147,28 +122,29 @@
     text-align: justify;
     letter-spacing: 0.095em;
     text-transform: capitalize;
+    padding: 1vw 2vw;
 }
 
-.continue-reading {
-    font-family: Libre Franklin;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.3vw;
-    line-height: 1.3vw;
-    text-align: justify;
-    letter-spacing: 0.095em;
-    color:#26866d;
-    cursor: pointer;
+.homepage-bottom-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px 50px;
+    width: 100%;
+    min-height:40vw;
+    background-color: #222222;
 }
 
-.news-marquee {
+.news-marquee-1 {
     display: flex;
     flex-direction: column;
-    height: 10vw;
-    width: 30vw;
-    margin-top: 15vw;
+    height: 100%;
+    width: 70vw;
+    align-self: flex-start;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-right: 7vw;
 }
 
 .news {
@@ -189,6 +165,15 @@
     width: 100%;
     background-color: inherit ;
     height: 3vw;
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    color: white;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    text-transform: capitalize;
 }
 
 .news-title {
@@ -222,138 +207,6 @@
     text-align: justify;
     letter-spacing: 0.095em;
     overflow: hidden;
-}
-
-.homepage-toppost {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: 30vw;
-    margin-top:8vw;
-    position: relative;
-    z-index: 1;
-}
-
-.toppost-box {
-    display: flex;
-    width: 80vw;
-    height: 100%;
-
-    &:hover {
-        filter: brightness(110%);
-        cursor: pointer;
-    }
-}
-
-.red-bar {
-    width: 1px;
-    height: inherit;
-    background-color:#CC4C4C;
-}
-
-.green-bar {
-    width: 1px;
-    height: inherit;
-    background-color:#23C56D;
-}
-
-.violet-bar {
-    width: 1px;
-    height: inherit;
-    background-color:#8B62FF;
-}
-
-.post {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.post-header {
-    font-family: Playfair Display SC;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2vw;
-    line-height: 2vw;
-    text-align: justify;
-    letter-spacing: 0.095em;
-    color: #FFFFFF;
-    margin: 1vw;
-}
-
-.post-text {
-    font-family: Roboto;
-    font-style: normal;
-    font-size: 1.3vw;
-    line-height: 1.3vw;
-    letter-spacing: 0.05em;
-    text-align: justify;
-    text-transform: capitalize;
-    color: #FFFFFF;
-    margin: 1vw;
-}
-
-.homepage-comittee {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 5vw;
-    min-height: 10vw;
-    position: relative;
-    z-index: 1;
-    background-color:white;
-    padding: 10px 50px;
-
-    
-}
-
-.comittee-header {
-    font-family: Playfair Display SC;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2vw;
-    line-height: 2vw;
-    text-align: justify;
-    letter-spacing: 0.095em;
-    color: #585858;
-}
-
-.comittee-list {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1vw;
-    flex-wrap: wrap;
-}
-
-.member {
-    margin-right: 1vw;
-}
-
-.member-pic {
-    border-radius: 100%;
-}
-
-.homepage-bottom-container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 20px 50px;
-    width: 100%;
-    min-height:40vw;
-    background-color: #222222;
-}
-
-.news-marquee-1 {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 70vw;
-    align-self: flex-start;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-right: 7vw;
 }
 
 .red-bar-1 {

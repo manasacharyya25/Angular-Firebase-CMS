@@ -45,3 +45,26 @@
     padding: 0;
    line-height: 1.3;
  }
+
+ .input-div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1vw;
+ }
+
+ .input-div > label {
+   font-family: Playfair Display SC;
+   font-style: normal;
+   font-size: 1vw;
+   line-height: 1vw;
+   text-align: justify;
+   letter-spacing: 0.095em;
+   text-transform: capitalize;
+   margin-bottom: 1vw;
+ }
+
+ .input-div > input {
+   margin-left: 1vw;
+   padding: 0.5vw;
+   width: 100%; 
+ }
