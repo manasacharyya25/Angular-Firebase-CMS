@@ -2,287 +2,705 @@
   <mat-drawer mode="side" opened class="sidebar">
     <mat-sidenav-container>
       <mat-sidenav-content class="admin-banner">Admin</mat-sidenav-content>
-      <mat-sidenav-content class="sidenav-content">Homepage</mat-sidenav-content>
-      <mat-sidenav-content class="sidenav-content">Posts</mat-sidenav-content>
-      <mat-sidenav-content class="sidenav-content">Notifications</mat-sidenav-content>
-      <mat-sidenav-content class="sidenav-content">Image Upload</mat-sidenav-content>
-      <mat-sidenav-content class="sidenav-content">Site Details</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="showForm('Homepage')">Homepage</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="showForm('Posts')">Posts</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="showForm('Notifications')">Notifications</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="showForm('Image Upload')">Image Upload</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="showForm('Site Details')">Site Details</mat-sidenav-content>
     </mat-sidenav-container>
   </mat-drawer>
 
 
 
   <mat-drawer-content class="content">
-    
-    <div class="heading">Homepage</div>
+    <div class="heading">{{formTitle}}</div>
 
-    <div class="form">
-      <mat-accordion>
-        <mat-expansion-panel [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Featured Content
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          
-          <div class="input-div">
-            <label>Title</label>
-            <input type="text" />
+    <div *ngIf="formTitle=='Homepage'">
+      <div class="form">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Featured Content
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" [(ngModel)]="featuredPostTitle"/>
+            </div>
+            
+            <div class="editor-container">
+              <!-- <form (ngSubmit)="submit()" [formGroup]="featuredContentForm"> -->
+                <editor
+                [formControl]="featuredPostContent"
+                [init]="{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    'advlist autolink lists link charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                }"
+              ></editor>
+            <input
+                  style="display: none"
+                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  #imageInput />
+
+            <div class="upload-contaier" (click)="imageInput.click()">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
+            </div>
+  
+            </div>
+            
+          <div class="submit-btn-holder">
+            <div class="submit-btn" (click)="getPost()">Submit</div>
           </div>
-          
-          <div class="editor-container">
-            <editor [(ngModel)]="dataModel"
-            [init]="{
-              height: 500,
-              menubar: false,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar:
-                'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-            }"
-          ></editor>
-
-          <div class="upload-contaier">
-            <div class="image-upload-container">
-              <img src="assets/admin/image.png" width="100vw"/>
-              <p style="color:#666769">Upload Image</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Top Post #1
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
             </div>
-
-            <div class="file-upload-container">
-              <p style="color:#666769">Upload Attachment</p>
+            
+            <div class="editor-container">
+              <editor [formControl]="featuredPostContent"
+              [init]="{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help'
+              }"
+            ></editor>
+  
+            <div class="upload-contaier">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
             </div>
-          </div>
-
-          </div>
-          
-        <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Submit</div>
-        </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Top Post #1
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          
-          <div class="input-div">
-            <label>Title</label>
-            <input type="text" />
-          </div>
-          
-          <div class="editor-container">
-            <editor [(ngModel)]="dataModel"
-            [init]="{
-              height: 500,
-              menubar: false,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar:
-                'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-            }"
-          ></editor>
-
-          <div class="upload-contaier">
-            <div class="image-upload-container">
-              <img src="assets/admin/image.png" width="100vw"/>
-              <p style="color:#666769">Upload Image</p>
+  
             </div>
-
-            <div class="file-upload-container">
-              <p style="color:#666769">Upload Attachment</p>
-            </div>
-          </div>
-
-          </div>
-          
-        <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Submit</div>
-        </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Top Post #2
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          
-          <div class="input-div">
-            <label>Title</label>
-            <input type="text" />
-          </div>
-          
-          <div class="editor-container">
-            <editor [(ngModel)]="dataModel"
-            [init]="{
-              height: 500,
-              menubar: false,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar:
-                'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-            }"
-          ></editor>
-
-          <div class="upload-contaier">
-            <div class="image-upload-container">
-              <img src="assets/admin/image.png" width="100vw"/>
-              <p style="color:#666769">Upload Image</p>
-            </div>
-
-            <div class="file-upload-container">
-              <p style="color:#666769">Upload Attachment</p>
-            </div>
-          </div>
-
-          </div>
-          
-        <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Submit</div>
-        </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Top Post #3
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          
-          <div class="input-div">
-            <label>Title</label>
-            <input type="text" />
-          </div>
-          
-          <div class="editor-container">
-            <editor [(ngModel)]="dataModel"
-            [init]="{
-              height: 500,
-              menubar: false,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar:
-                'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-            }"
-          ></editor>
-
-          <div class="upload-contaier">
-            <div class="image-upload-container">
-              <img src="assets/admin/image.png" width="100vw"/>
-              <p style="color:#666769">Upload Image</p>
-            </div>
-
-            <div class="file-upload-container">
-              <p style="color:#666769">Upload Attachment</p>
-            </div>
-          </div>
-
-          </div>
-          
-        <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Submit</div>
-        </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-      
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Management Comittee
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="comittee-list-container">
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 1.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 2.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 3.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 4.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 5.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-
-            <div class="comittee-list-item">
-              <img src="assets/homepage/Ellipse 6.png" width="60vw" height="60vw" />
-              <input type="text" placeholder="Name" />
-              <input type="text" placeholder="Designation" />
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-          
-          
+            
           <div class="submit-btn-holder">
             <div class="submit-btn" (click)="submit()">Submit</div>
           </div>
-        </mat-expansion-panel>
-      </mat-accordion>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Top Post #2
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
+            </div>
+            
+            <div class="editor-container">
+              <editor [formControl]="featuredPostContent"
+              [init]="{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help'
+              }"
+            ></editor>
+  
+            <div class="upload-contaier">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
+            </div>
+  
+            </div>
+            
+          <div class="submit-btn-holder">
+            <div class="submit-btn" (click)="submit()">Submit</div>
+          </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Top Post #3
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
+            </div>
+            
+            <div class="editor-container">
+              <editor [formControl]="featuredPostContent"
+              [init]="{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help'
+              }"
+            ></editor>
+  
+            <div class="upload-contaier">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
+            </div>
+  
+            </div>
+            
+          <div class="submit-btn-holder">
+            <div class="submit-btn" (click)="submit()">Submit</div>
+          </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Management Comittee
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+  
+            <div class="comittee-list-container">
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 1.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+  
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 2.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+  
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 3.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+  
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 4.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+  
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 5.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+  
+              <div class="comittee-list-item">
+                <img src="assets/homepage/Ellipse 6.png" width="60vw" height="60vw" />
+                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="Designation" />
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            
+            
+            <div class="submit-btn-holder">
+              <div class="submit-btn" (click)="submit()">Submit</div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <div *ngIf="formTitle=='Posts'">
+      <div class="form">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Create New Post
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
+              <select>
+                <option disabled selected>Main Menu</option>
+                <option>Home</option>
+                <option>About Us</option>
+                <option>Facilities</option>
+                <option>Administration</option>
+                <option>Admission</option>
+                <option>Miscellaneous</option>
+              </select>
+            </div>
+            
+            <div class="editor-container">
+                <editor
+                [formControl]="featuredPostContent"
+                [init]="{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                }"
+              ></editor>
+              
+            
+            <input
+                  style="display: none"
+                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  #imageInput />
+
+            <div class="upload-contaier" (click)="imageInput.click()">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
+            </div>
+  
+            </div>
+            
+          <div class="submit-btn-holder">
+            <div class="submit-btn" (click)="submit()">Submit</div>
+          </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Edit Post
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="input-div">
+              <label>Serach Post</label>
+              <input type="text" />
+            </div>
+
+            <div class="search-resultset">
+              <div class="search-result">
+                <div>#1</div>
+                <div>School Reopens</div>
+                <div>27/01/2020</div>
+              </div>
+              <div class="search-result">
+                <div>#2</div>
+                <div>Covid Vaccination Drive</div>
+                <div>05/03/2021</div>
+              </div>
+              <div class="search-result">
+                <div>#3</div>
+                <div>HM Message</div>
+                <div>20/05/2021</div>
+              </div>
+              <div class="search-result">
+                <div>#4</div>
+                <div>Vaccancies</div>
+                <div>010/01/2022</div>
+              </div>
+            </div>
+            
+            <div class="edit-post">
+              <div class="input-div">
+                <label>Title</label>
+                <input type="text" />
+                <select>
+                  <option disabled selected>Main Menu</option>
+                  <option>Home</option>
+                  <option>About Us</option>
+                  <option>Facilities</option>
+                  <option>Administration</option>
+                  <option>Admission</option>
+                  <option>Miscellaneous</option>
+                </select>
+              </div>
+              
+              <div class="editor-container">
+                  <editor
+                  [formControl]="featuredPostContent"
+                  [init]="{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                      'undo redo | formatselect | bold italic backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlist outdent indent | removeformat | help'
+                  }"
+                ></editor>
+                
+              
+              <input
+                    style="display: none"
+                    type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                    #imageInput />
+  
+              <div class="upload-contaier" (click)="imageInput.click()">
+                <div class="image-upload-container">
+                  <img src="assets/admin/image.png" width="100vw"/>
+                  <p style="color:#666769">Upload Image</p>
+                </div>
+    
+                <div class="file-upload-container">
+                  <p style="color:#666769">Upload Attachment</p>
+                </div>
+              </div>
+    
+              </div>
+              
+            <div class="submit-btn-holder">
+              <div class="submit-btn" (click)="submit()">Submit</div>
+            </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    
+    <div *ngIf="formTitle=='Notifications'">
+      <div class="form">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Create New Notification
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
+            </div>
+            
+            <div class="editor-container">
+                <editor
+                [formControl]="featuredPostContent"
+                [init]="{
+                  height: 500,
+                  menubar: false,
+                  plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                }"
+              ></editor>
+            
+            <input
+                  style="display: none"
+                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  #imageInput />
+
+            <div class="upload-contaier" (click)="imageInput.click()">
+              <div class="image-upload-container">
+                <img src="assets/admin/image.png" width="100vw"/>
+                <p style="color:#666769">Upload Image</p>
+              </div>
+  
+              <div class="file-upload-container">
+                <p style="color:#666769">Upload Attachment</p>
+              </div>
+            </div>
+  
+            </div>
+            
+          <div class="submit-btn-holder">
+            <div class="submit-btn" (click)="submit()">Submit</div>
+          </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Edit Notification
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="input-div">
+              <label>Serach Notification</label>
+              <input type="text" />
+            </div>
+
+            <div class="search-resultset">
+              <div class="search-result">
+                <div>#1</div>
+                <div>School Reopens</div>
+                <div>27/01/2020</div>
+              </div>
+              <div class="search-result">
+                <div>#2</div>
+                <div>Covid Vaccination Drive</div>
+                <div>05/03/2021</div>
+              </div>
+              <div class="search-result">
+                <div>#3</div>
+                <div>HM Message</div>
+                <div>20/05/2021</div>
+              </div>
+              <div class="search-result">
+                <div>#4</div>
+                <div>Vaccancies</div>
+                <div>010/01/2022</div>
+              </div>
+            </div>
+            
+            <div class="edit-post">
+              <div class="input-div">
+                <label>Title</label>
+                <input type="text" />
+                <select>
+                  <option disabled selected>Main Menu</option>
+                  <option>Home</option>
+                  <option>About Us</option>
+                  <option>Facilities</option>
+                  <option>Administration</option>
+                  <option>Admission</option>
+                  <option>Miscellaneous</option>
+                </select>
+              </div>
+              
+              <div class="editor-container">
+                  <editor
+                  [formControl]="featuredPostContent"
+                  [init]="{
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                      'undo redo | formatselect | bold italic backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlist outdent indent | removeformat | help'
+                  }"
+                ></editor>
+                
+              
+              <input
+                    style="display: none"
+                    type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                    #imageInput />
+  
+              <div class="upload-contaier" (click)="imageInput.click()">
+                <div class="image-upload-container">
+                  <img src="assets/admin/image.png" width="100vw"/>
+                  <p style="color:#666769">Upload Image</p>
+                </div>
+    
+                <div class="file-upload-container">
+                  <p style="color:#666769">Upload Attachment</p>
+                </div>
+              </div>
+    
+              </div>
+              
+            <div class="submit-btn-holder">
+              <div class="submit-btn" (click)="submit()">Submit</div>
+            </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <div *ngIf="formTitle=='Image Upload'">
+      <div class="form">
+        <mat-panel-title>
+          Create New Image Gallery
+        </mat-panel-title>
+        <div>
+          <div class="input-div">
+            <label>Gallery Name</label>
+            <input type="text" />
+          </div>
+        </div>
+        
+        <div class="upload-contaier" (click)="imageInput.click()">
+          <div class="image-gallery-upload-container">
+          </div>
+        </div>
+
+        <div class="submit-btn-holder">
+          <div class="submit-btn" (click)="submit()">Upload</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="formTitle=='Site Details'">
+      <div class="form">
+        <mat-panel-title>
+          Edit Site Details
+        </mat-panel-title>
+
+        <div class="site-details-1">
+          <div style="width: 100%;">
+            <div class="input-div">
+              <label>Title</label>
+              <input type="text" />
+            </div>
+  
+            <div class="input-div">
+              <label>Tagline</label>
+              <input type="text" />
+            </div>
+
+            <div class="input-div">
+              <label>Contact</label>
+              <input type="text" />
+            </div>
+  
+            <div class="input-div">
+              <label>Email</label>
+              <input type="text" />
+            </div>
+          </div>
+          <div (click)="imageInput.click()">
+            <div class="hero-image-upload-container">
+              <img src="assets/admin/image.png" width="100vw"/>
+                  <p style="color:#666769">Upload Site Background</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="input-div">
+            <label>Address</label>
+            <input type="text" />
+          </div>
+
+          <div class="input-div">
+            <label>Map Location</label>
+            <input type="text" />
+          </div>
+
+          <div class="input-div">
+            <label>Instagram</label>
+            <input type="text" />
+          </div>
+
+          <div class="input-div">
+            <label>Twitter</label>
+            <input type="text" />
+          </div>
+
+          <div class="input-div">
+            <label>Facebook</label>
+            <input type="text" />
+          </div>
+
+          <div class="input-div">
+            <label>Linkedin</label>
+            <input type="text" />
+          </div>
+
+        <div class="submit-btn-holder">
+          <div class="submit-btn" (click)="submit()">Submit</div>
+        </div>
+      </div>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

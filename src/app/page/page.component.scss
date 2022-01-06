@@ -9,7 +9,13 @@
     top: 0;
     left: 0;
     z-index: 0;
+    width: 100%;
+    height: 85%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/assets/homepage/hero.png");
 }
+
 
 .homepage-content-container {
     display: flex;
@@ -276,4 +282,11 @@
 
 .copyright > span {
     margin-right: 1vw;
+}
+
+.post-image {
+    float: left;
+    border-radius: 5px;
+    margin-right: 1vw;
+    margin-bottom: 1vw;
 }

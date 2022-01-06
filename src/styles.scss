@@ -61,10 +61,25 @@
    letter-spacing: 0.095em;
    text-transform: capitalize;
    margin-bottom: 1vw;
+   min-width: 7vw;
  }
 
  .input-div > input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
    margin-left: 1vw;
    padding: 0.5vw;
    width: 100%; 
+ }
+
+ select, option {
+   margin-left: 1vw;
+   padding: 0.5vw;
+   width: 40%; 
+   font-size: 1vw;
+   line-height: 1vw;
+   text-align: justify;
+   letter-spacing: 0.095em;
+   text-transform: capitalize;
  }

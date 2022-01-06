@@ -14,7 +14,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { AdminComponent } from './admin/admin.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
@@ -39,7 +39,9 @@ import {MatIconModule} from '@angular/material/icon';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    EditorModule
+    EditorModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

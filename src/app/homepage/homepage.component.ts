@@ -1,9 +1,12 @@
 import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import {
-  Firestore, addDoc, collection, collectionData, where, query,
-  doc, docData, deleteDoc, updateDoc, DocumentReference, setDoc
+  Firestore, addDoc, collection, collectionData, query,
+  DocumentData
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { getDoc } from '@firebase/firestore';
+import { FirebaseConverters } from '../models/firebase.converters';
+import { Post } from '../models/post.model';
 
 @Component({
   selector: 'app-homepage',
@@ -22,24 +25,25 @@ export class HomepageComponent implements OnInit {
   }
 
   onClick() {
-    console.log("Clicked");
     const postsCollection = collection(this.fireStore, "posts");
-    // var post = new Post("New Post", "New Post is about testing Post Creation in Firebase Firestore", 
-    //     Date.now().toLocaleString(), "Uncategorized");
 
-    return addDoc(postsCollection, {
-      name: "New Post without Id",
-      text: "New Post is about testing Post Creation in Firebase Firestore",
-      date: Date.now().toLocaleString(),
-      category: "Uncategorized"
-    }).then(response => console.log(response));
+    addDoc(postsCollection, FirebaseConverters.toFirestore(new Post("ABC", "abd", new Date().toLocaleDateString(), "casdf", "pagd"))).then(response => console.log(response));
   }
 
   onGet() {
     console.log("Get");
     const postsCollection = collection(this.fireStore, "posts");
-    var q = query(postsCollection, where("category","==","Uncategorized"));
-    collectionData(q).forEach(response => console.log(response));
+
+    // var q = query(postsCollection, where("category","==","Uncategorized"));
+    var q = query(postsCollection);
+    // var docResponse = getDoc(docRef);
+    
+    collectionData(q).forEach((response:DocumentData[]) => {
+      response.forEach((post: any) => {
+        var p = new Post(post.title, post.content, post.date, post.category, post.page);
+        console.log(p)
+      });
+    });
   }
 
 }

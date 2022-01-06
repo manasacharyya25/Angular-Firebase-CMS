@@ -64,6 +64,7 @@
 
 .form {
     display: flex;
+    width: 80vw;
     flex-direction: column;
     margin-top: 4vw;
 }
@@ -171,6 +172,60 @@ mat-form-field {
 
 input {
     margin-left: 1vw;
-    height: 1.5vw;
     padding: 0.5vw;
   }
+
+.search-resultset {
+    margin-bottom: 1vw;
+}
+
+.search-result {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 0.5px #85878a solid;
+    padding: 0.5vw 1.5vw;
+
+    &:hover {
+        background-color: #85878a;
+        color: #f0eeeb;
+    }
+}
+
+.edit-post {
+    display: none;
+}
+
+.image-gallery-upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #4877cf;
+    margin-left:1vw;
+    margin-bottom: 1vw;
+    height: 20vw;
+    width:80vw;
+    cursor: pointer;
+
+    background-size: 20vw;
+    background-image: url("/assets/admin/image.png");
+}
+
+.hero-image-upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #4877cf;
+    margin-left:1vw;
+    margin-bottom: 1vw;
+    height: 15vw;
+    width: 30vw;
+    cursor: pointer;
+}
+
+.site-details-1 {
+    display: flex;
+    justify-content: space-between;
+}
