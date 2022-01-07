@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ImagesComponent } from './images/images.component';
 import { PageComponent } from './page/page.component';
 
 const routes: Routes = [
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path:'admin',
     component: AdminComponent,
+    pathMatch: 'full',
+  },
+  {
+    path:'images',
+    component: ImagesComponent,
     pathMatch: 'full',
   }
 ];

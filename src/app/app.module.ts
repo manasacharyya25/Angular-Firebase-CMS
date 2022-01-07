@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PageComponent } from './page/page.component';
-
 import { environment } from 'src/environments/environment';
-
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
@@ -19,13 +16,17 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { ImagesComponent } from './images/images.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     PageComponent,
-    AdminComponent
+    AdminComponent,
+    ImagesComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,9 @@ import {MatIconModule} from '@angular/material/icon';
     provideStorage(() => getStorage()),
     EditorModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GalleryModule,
+    LightboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

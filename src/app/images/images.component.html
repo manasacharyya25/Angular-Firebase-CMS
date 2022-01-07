@@ -1,0 +1,41 @@
+<div class="images">
+    <!-- <div class="homepage-heroimage-container">
+    </div> -->
+
+    <div class="images-content-container">
+        <div class="homepage-banner">
+            <img src="assets/homepage/logo.png" width="5%"/>
+            <div class="name-and-slogan">
+                <div class="name">Air Force School Chabua</div>
+                <div class="slogan">Strive For Excellence</div>
+            </div>
+        </div>
+
+        <div class="homepage-navbar">
+            <div class="navbar-link" style="border-radius: 3px 0 0 3px;">Home</div>
+            <div class="navbar-link">About Us</div>
+            <div class="navbar-link">Facilities</div>
+            <div class="navbar-link">Administration</div>
+            <div class="navbar-link">Admission</div>
+            <div class="navbar-link" style="border-radius: 0 3px 3px 0">Miscellaneous</div>
+        </div>
+
+        <div class="images-header-text">
+            Image Gallery
+        </div>
+
+        <div class="image-gallery">
+            <!-- <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]" class="each-gallery" (click)="showImageSlider()">
+            </div> -->
+
+            <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]" class="each-gallery" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
+            </div>
+        </div>
+
+        <gallery [items]="images" thumbPosition="left" fluid class="slider-gallery" *ngIf="showSlider"></gallery>
+
+
+    
+    </div>
+
+</div>
