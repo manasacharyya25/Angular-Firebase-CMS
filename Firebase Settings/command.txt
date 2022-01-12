@@ -1,0 +1,1 @@
+> gsutil cors set cors.json <gs://school-cms-966e4.appspot.com>

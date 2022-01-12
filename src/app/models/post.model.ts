@@ -20,4 +20,12 @@ export class Post {
         this.imageUrl = imageUrl;
         this.attachmentUrl = attachmentUrl;
     }
+
+    public setImageUrl(image: string) {
+        this.imageUrl = image;
+    }
+
+    public setAttachmentUrl(attachment: string) {
+        this.attachmentUrl = attachment;
+    }
 }

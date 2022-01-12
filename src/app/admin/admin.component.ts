@@ -8,6 +8,8 @@ import {
 } from '@angular/fire/firestore';
 import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Utils } from '../common/utils';
 
 @Component({
   selector: 'app-admin',
@@ -17,12 +19,13 @@ import { Post } from '../models/post.model';
 export class AdminComponent implements OnInit {
 
   formTitle: string;
+  imageUrl: SafeUrl;
 
   featuredPostTitle: string;
   featuredPostContent : FormControl;
 
   
-  constructor(private fireStore: Firestore, private fireStorage: Storage) {
+  constructor(private fireStore: Firestore, private fireStorage: Storage, private utils: Utils) {
     this.formTitle = "Homepage"
     this.featuredPostContent = new FormControl("");
    }
@@ -43,13 +46,6 @@ export class AdminComponent implements OnInit {
       console.log(snapshot);
     });
 
-  }
-
-  // TODO: Testing Get Image. Will Move to Homepage and Post Page Later on 
-  getImage() {
-    const gsReference = ref(this.fireStorage, 'gs://school-cms-966e4.appspot.com/Featured Content');
-    var x  = getBytes(gsReference)
-    console.log(x);
   }
 
   getPost() {

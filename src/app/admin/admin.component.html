@@ -56,6 +56,7 @@
             <div class="upload-contaier" (click)="imageInput.click()">
               <div class="image-upload-container">
                 <img src="assets/admin/image.png" width="100vw"/>
+                <!-- <img [src]="imageUrl" width="100vw"/> -->
                 <p style="color:#666769">Upload Image</p>
               </div>
   
@@ -67,7 +68,7 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="getPost()">Submit</div>
+            <div class="submit-btn" (click)="getImage()">Submit</div>
           </div>
           </mat-expansion-panel>
         </mat-accordion>

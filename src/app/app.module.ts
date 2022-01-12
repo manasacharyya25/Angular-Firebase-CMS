@@ -19,6 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { ImagesComponent } from './images/images.component';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     FormsModule,
     ReactiveFormsModule,
     GalleryModule,
-    LightboxModule
+    LightboxModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

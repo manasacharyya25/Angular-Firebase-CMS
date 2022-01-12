@@ -20,48 +20,12 @@
             <div class="navbar-link" style="border-radius: 0 3px 3px 0">Miscellaneous</div>
         </div>
 
-        <div class="hmmessage-container">
-            <div class="hm-header">Message From Headmistress</div>
+        <div class="hmmessage-container" *ngIf="showPost">
+            <div class="hm-header">{{pagePost.title}}</div>
             <div style="padding:2vw 5vw; overflow: hidden;max-height: 70%;" >
-                <img src="assets/homepage/hm.png" width="45%" class="post-image" />
-                <i>“Education is not the learning of facts, but the training of the mind to think.”</i><br/>
-                -Albert Einstein <br /><br />
-
-                Welcome to the website of Air Force School Chabua. As the headmistress of the school, I feel 
-                honoured and privileged to be a part of an educational institution where we work at 
-                implementing a well balanced curriculum to ensure that the children who walk into our school 
-                will not just love their school years but truly be prepared to face life’s challenges.
-                With the onset of the 21st century, the entire world has witnessed an era of intense 
-                transformation in all areas. Naturally, for such times, a different skill set that is 21st century skills 
-                are required that would enable an individual to cope up and succeed in facing the challenges in 
-                real life, leading to his/her holistic progress. We aim to empower our students with these skills 
-                so that they can develop holistically and contribute to the progress and development of society, 
-                nation and world. <br /><br />
-
-                Learning is complete and holistic only when a student is able to effectively perform and fulfil 
-                his/her responsibilities and duties towards self, school, family, society and above all, the nation. 
-                So our goal is to enable our students to be a good citizen and a responsible human being who 
-                is well aware of his potential and competence.<br /><br />
-
-                We have a team of highly dedicated teachers. The basic objective of our teachers is to improve 
-                the learning outcomes of the students. We strive to create inclusive classroom environment 
-                where all students, irrespective of their individual abilities and skills are welcomed holistically. 
-                Here students are encouraged and motivated to take part in a variety of thinking activities, 
-                strategies and group dynamics so that the classroom becomes alive.<br /><br />
-
-                Parental involvement is a significant factor in student’s progress. We seek parents’ support to 
-                know more about the child so that we can work together on the child’s strengths and help 
-                him/her in the journey to discover himself/herself. Together lets teach them the important values
-                like honesty, kindness, generosity, humility, optimism, perseverance, tolerance and more so that 
-                they can create a beautiful world around them. Together we can make a difference!<br /><br />
-
-                A committed and supportive management, dedicated teachers, caring and co-operative parents 
-                blend harmoniously to create a child centric school. I am very sure through collaborative effort 
-                we can achieve more to benefit our students who are the future leaders of tomorrow.<br /><br />
-
-                <strong>With sincere and warm regards,</strong><br />
-                <strong>Nuran Hussain</strong><br />
-                <strong>Headmistress</strong>
+                <img [src]="pagePost.imageUrl" width="45%" class="post-image" *ngIf="pagePost.imageUrl" />
+                
+                <div [innerHTML]="pagePost.content"></div>
             </div>
         </div>
     </div>
