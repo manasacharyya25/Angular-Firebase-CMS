@@ -229,3 +229,14 @@ input {
     display: flex;
     justify-content: space-between;
 }
+
+.search-button {
+    border: 1px solid #888888;
+    border-radius: 2px;
+    padding: 4px;
+    margin-left: 4px;
+    &:hover {
+        cursor: pointer;
+        filter: brightness(85%);
+    }
+}

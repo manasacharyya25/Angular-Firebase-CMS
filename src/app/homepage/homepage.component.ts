@@ -4,7 +4,7 @@ import {
   DocumentData
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { getDoc } from '@firebase/firestore';
+import { doc, getDoc } from '@firebase/firestore';
 import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
 
@@ -20,19 +20,24 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToPage() {
-    this.router.navigate(['page']);
+  goToPageWithCategory(category: string) {
+    this.router.navigate(['page'], {
+      queryParams: {
+        category: category
+      }
+    });
   }
 
   onClick() {
     const postsCollection = collection(this.fireStore, "posts");
 
-    addDoc(postsCollection, FirebaseConverters.toFirestore(new Post("ABC", "abd", new Date().toLocaleDateString(), "casdf", "pagd"))).then(response => console.log(response));
+    addDoc(postsCollection, FirebaseConverters.toFirestore(new Post("", "ABC", "abd", new Date().toLocaleDateString(), "casdf", "pagd"))).then(response => console.log(response));
   }
 
   onGet() {
     console.log("Get");
     const postsCollection = collection(this.fireStore, "posts");
+    
 
     // var q = query(postsCollection, where("category","==","Uncategorized"));
     var q = query(postsCollection);
@@ -40,7 +45,7 @@ export class HomepageComponent implements OnInit {
     
     collectionData(q).forEach((response:DocumentData[]) => {
       response.forEach((post: any) => {
-        var p = new Post(post.title, post.content, post.date, post.category, post.page);
+        var p = new Post(post.id, post.title, post.content, post.date, post.category, post.page);
         console.log(p)
       });
     });

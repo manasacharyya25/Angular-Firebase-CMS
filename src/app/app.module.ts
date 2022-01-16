@@ -20,6 +20,7 @@ import { ImagesComponent } from './images/images.component';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { HttpClientModule } from '@angular/common/http';
+import { SafeHtmlPipe } from './common/SafeHtmlPipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomepageComponent,
     PageComponent,
     AdminComponent,
-    ImagesComponent
+    ImagesComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

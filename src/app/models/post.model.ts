@@ -10,8 +10,8 @@ export class Post {
     imageUrl: string|undefined;
     attachmentUrl: string|undefined;
 
-    public constructor(title: string, content: string, date: string, category: string, page: string, imageUrl?: string, attachmentUrl?: string) {
-        this.id = UUID.UUID();
+    public constructor(id: string, title: string, content: string, date: string, category: string, page: string, imageUrl?: string, attachmentUrl?: string) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;

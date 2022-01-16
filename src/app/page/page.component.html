@@ -25,7 +25,13 @@
             <div style="padding:2vw 5vw; overflow: hidden;max-height: 70%;" >
                 <img [src]="pagePost.imageUrl" width="45%" class="post-image" *ngIf="pagePost.imageUrl" />
                 
-                <div [innerHTML]="pagePost.content"></div>
+                <div [innerHTML]="pagePost.content | safeHtml"></div>
+
+                <div class="post-attachment-container" *ngIf="pagePost.attachmentUrl">
+                    <div class="post-attachment">
+                        <img src="assets/page/download-solid.svg" width="15px" style="margin-right: 5px;"> Download Attachment
+                    </div>
+                </div>
             </div>
         </div>
     </div>

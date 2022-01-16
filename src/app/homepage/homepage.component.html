@@ -65,14 +65,14 @@
                 <div style="padding:5px 10px; overflow: hidden;max-height: 70%;" >
                     “Education is not the learning of facts, but the training of the mind to think.”Albert Einstein Welcome to the website of Air Force School Chabua. As the headmistress of the school, I feel honoured and privileged to be a part of an educational institution where we work at implementing a…
                 </div>
-                <div class="continue-reading" style="padding:5px 10px" (click)="goToPage()">Continue reading</div>
+                <div class="continue-reading" style="padding:5px 10px" (click)="goToPageWithCategory('Featured Content')">Continue reading</div>
             </div>
         </div>
     
         <div class="homepage-toppost">
             <div class="toppost-box">
                 <div class="red-bar"></div>
-                <div class="post" (click)="goToPage()">
+                <div class="post" (click)="goToPageWithCategory('Top Post 01')">
                     <div class="post-header">Our History</div>
                     <img src="assets/homepage/history.png" width="100%" height="50%" style="margin-left:0.px"/>
                     <div class="post-text">
@@ -82,7 +82,7 @@
             </div>
             <div class="toppost-box">
                 <div class="green-bar"></div>
-                <div class="post">
+                <div class="post" (click)="goToPageWithCategory('Top Post 02')">
                     <div class="post-header">Vission & Mission</div>
                     <img src="assets/homepage/mission.png" width="100%" height="50%" style="margin-left:0.px"/>
                     <div class="post-text">
@@ -92,7 +92,7 @@
             </div>
             <div class="toppost-box">
                 <div class="violet-bar"></div>
-                <div class="post">
+                <div class="post" (click)="goToPageWithCategory('Top Post 03')">
                     <div class="post-header">Achievements</div>
                     <img src="assets/homepage/comittee.png" width="100%" height="50%" style="margin-left:0.px"/>
                     <div class="post-text">
