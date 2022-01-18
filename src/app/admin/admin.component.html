@@ -367,19 +367,27 @@
               <img src="assets/admin/search-solid.svg" height="24px" class="search-button" (click)="searchPost(search_text.value)"/>
             </div>
 
-            <div class="search-resultset" *ngIf="!showSearchResults">
-              <div class="search-result" *ngFor="let post of recentPosts; let i=index">
-                <div>#{{i+1}}</div>
-                <div>{{post.title}}</div>
+            <div class="search-resultset" *ngIf="!showSearchResults&&!showEditPost">
+              <div class="search-result" *ngFor="let post of recentPosts">
+                <div style="min-width: 100px;">{{post.title}}</div>
                 <div>{{post.date}}</div>
+                <div>
+                  <img src="assets/admin/external-link.svg" alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(post.title)"/>
+                  <img src="assets/admin/edit.svg" alt="Edit" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="editPost(post)"/>
+                  <img src="assets/admin/trash.svg" alt="Delete" height="15px" style="cursor: pointer;"/>
+                </div>
               </div>
             </div>
 
-            <div class="search-resultset" *ngIf="showSearchResults">
+            <div class="search-resultset" *ngIf="showSearchResults&&!showEditPost">
               <div class="search-result" *ngIf="searchResult.id">
-                <div>#1</div>
                 <div>{{searchResult.title}}</div>
                 <div>{{searchResult.date}}</div>
+                <div>
+                  <img src="assets/admin/external-link.svg"  alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(searchResult.title)"/>
+                  <img src="assets/admin/edit.svg" height="15px" alt="Edit" style="margin-right: 10px;cursor: pointer;" (click)="editPost(searchResult)"/>
+                  <img src="assets/admin/trash.svg" height="15px" alt="Delete" style="cursor: pointer;"/>
+                </div>
               </div>
 
               <div class="search-result" *ngIf="!searchResult.id">
@@ -389,11 +397,11 @@
               </div>
             </div>
             
-            <div class="edit-post">
+            <div class="edit-post" *ngIf="showEditPost">
               <div class="input-div">
                 <label>Title</label>
-                <input type="text" />
-                <select>
+                <input type="text" [(ngModel)]="currentPostTitle"/>
+                <select [(ngModel)]="editPostPage">
                   <option disabled selected>Main Menu</option>
                   <option>Home</option>
                   <option>About Us</option>
@@ -442,7 +450,7 @@
               </div>
               
             <div class="submit-btn-holder">
-              <div class="submit-btn" (click)="submit()">Submit</div>
+              <div class="submit-btn" (click)="submitEditedPost()">Submit</div>
             </div>
             </div>
           </mat-expansion-panel>

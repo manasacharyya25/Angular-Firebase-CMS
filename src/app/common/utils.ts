@@ -83,7 +83,7 @@ export class Utils {
 
   async searchPosts(search_term: string): Promise<Post> {
     const postCollection = collection(this.fireStore, 'posts');
-    let q = query(postCollection, where('title', '==', search_term), orderBy("date", "desc"), limit(10));
+    let q = query(postCollection, where('title', '==', search_term), where('page','!=', 'Homepage'), orderBy("date", "desc"), limit(10));
 
     return new Promise<Post>((resolve, reject) => {
       collectionData(q).forEach((response: DocumentData[]) => {

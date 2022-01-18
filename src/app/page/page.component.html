@@ -3,22 +3,7 @@
     </div>
 
     <div class="homepage-content-container">
-        <div class="homepage-banner">
-            <img src="assets/homepage/logo.png" width="5%"/>
-            <div class="name-and-slogan">
-                <div class="name">Air Force School Chabua</div>
-                <div class="slogan">Strive For Excellence</div>
-            </div>
-        </div>
-    
-        <div class="homepage-navbar">
-            <div class="navbar-link" style="border-radius: 3px 0 0 3px;">Home</div>
-            <div class="navbar-link">About Us</div>
-            <div class="navbar-link">Facilities</div>
-            <div class="navbar-link">Administration</div>
-            <div class="navbar-link">Admission</div>
-            <div class="navbar-link" style="border-radius: 0 3px 3px 0">Miscellaneous</div>
-        </div>
+        <app-topbar></app-topbar>
 
         <div class="hmmessage-container" *ngIf="showPost">
             <div class="hm-header">{{pagePost.title}}</div>

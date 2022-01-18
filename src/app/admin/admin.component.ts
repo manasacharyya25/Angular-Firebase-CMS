@@ -12,6 +12,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utils } from '../common/utils';
 import { setDoc, updateDoc } from '@firebase/firestore';
 import { UUID } from 'angular2-uuid';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -29,9 +30,12 @@ export class AdminComponent implements OnInit {
   recentPosts: Post[];
   searchResult: Post;
   showSearchResults: boolean;
+  showEditPost: boolean;
+  editPostPage: string;
+  editPostId: string;
 
   
-  constructor(private fireStore: Firestore, private fireStorage: Storage, private utils: Utils) {
+  constructor(private router: Router, private fireStore: Firestore, private fireStorage: Storage, private utils: Utils) {
     this.formTitle = "Homepage"
     this.currentPostContent = new FormControl("");
    }
@@ -95,11 +99,30 @@ export class AdminComponent implements OnInit {
   }
 
   async searchPost(search_term: string) {
+    this.showEditPost = false;
     await this.utils.searchPosts(search_term).then((response: Post)=> {
       this.searchResult = response;
     }).catch(error => {
       this.searchResult = new Post('', 'No Results Found', '', '', '', '');
     });
     this.showSearchResults = true;
+  }
+
+  navigateToPost(title: string) {
+    window.open(`/page?title=${title}`, '_blank');
+  }
+
+  editPost(post: Post) {
+    console.log()
+    this.currentPostContent = new FormControl(post.content)
+    this.currentPostTitle = post.title
+    this.editPostPage = post.category;
+    this.editPostId = post.id;
+    this.showEditPost = true;
+  }
+
+  submitEditedPost() {
+    let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
+    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
   }
 }
