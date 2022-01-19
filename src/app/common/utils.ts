@@ -107,6 +107,26 @@ export class Utils {
 
   }
 
+  async getNavbarLinks() : Promise<Map<String, String[]>> {
+    var navbarLinksMap: Map<any, any> = new Map();
+
+    const postCollection = collection(this.fireStore, 'navbar');
+    let q = query(postCollection);
+
+    return new Promise<any>((resolve, reject) => {
+      collectionData(q).forEach((response: DocumentData[]) => {
+        if(response.length==0) {
+          reject("No Result Found")
+        }
+        response.forEach((navbarList: any) => {
+          navbarLinksMap.set(navbarList.label, navbarList.sublinks);
+        });
+        resolve(navbarLinksMap);
+      })
+    });
+  }
+
+
   private getImage(imageUrl: string): string {
     let imageSrc: string|null = '';
 
@@ -117,4 +137,6 @@ export class Utils {
 
     return imageSrc;
   }
+
+
 }

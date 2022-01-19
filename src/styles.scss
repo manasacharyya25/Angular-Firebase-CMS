@@ -87,3 +87,12 @@
  lightbox {
    z-index: 2;
 }
+
+.navbar-links {
+   padding: 1vw;
+   
+   border-bottom: 1px solid lightcoral;
+   &:hover {
+       background-color: lightcoral;
+   }
+}

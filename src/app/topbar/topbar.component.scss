@@ -71,7 +71,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding:1vw;
+    padding:1vw 0;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 
@@ -84,17 +84,7 @@
         background-color: #222222;
         color: #FFFFFF;
         margin-top: 1.5vw;
-        width: 115%;
         border-radius: 0 0 5px 5px;
-
-        & li {
-            padding: 1vw;
-            
-            border-bottom: 1px solid lightcoral;
-            &:hover {
-                background-color: lightcoral;
-            }
-        }
     }
 
     &:hover {

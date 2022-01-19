@@ -7,38 +7,33 @@
         </div>
     </div>
 
-    <div class="topbar-navbar">
-        <div class="navbar-link" style="border-radius: 5px 0 0 5px;">Home</div>
+    <div class="topbar-navbar" *ngIf="showNavbar">
+        <div class="navbar-link" style="border-radius: 5px 0 0 5px; padding:1vw">Home</div>
 
         <div class="navbar-link">
             About Us
             <div class="sublink">
-                <li style="border-top: 1px solid lightcoral;">Strength</li>
-                <li>Infrastructure</li>
+                <li class="navbar-links" *ngFor="let link of aboutUsLinks">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">Facilities
             <div class="sublink">
-                <li style="border-top: 1px solid lightcoral;">Strength</li>
-                <li>Infrastructure</li>
+                <li class="navbar-links" *ngFor="let link of facilitiesLinks">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">Administration
             <div class="sublink">
-                <li style="border-top: 1px solid lightcoral;">Strength</li>
-                <li>Infrastructure</li>
+                <li class="navbar-links" *ngFor="let link of administrationLinks">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">Admission
             <div class="sublink">
-                <li style="border-top: 1px solid lightcoral;">Strength</li>
-                <li>Infrastructure</li>
+                <li class="navbar-links" *ngFor="let link of admissionLinks">{{link}}</li>
             </div>
         </div>
-        <div class="navbar-link" style="border-radius: 0 5px 5px 0">Miscellaneous
+        <div class="navbar-link" style="border-radius: 0 5px 5px 0; padding:1vw;">Miscellaneous
             <div class="sublink">
-                <li style="border-top: 1px solid lightcoral;">Strength</li>
-                <li>Infrastructure</li>
+                <li class="navbar-links" *ngFor="let link of miscellaneousLinks">{{link}}</li>
             </div>
         </div>
     </div>
