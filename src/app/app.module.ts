@@ -50,7 +50,7 @@ import { TopbarComponent } from './topbar/topbar.component';
     ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

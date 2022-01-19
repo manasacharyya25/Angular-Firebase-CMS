@@ -619,17 +619,26 @@
         <div>
           <div class="input-div">
             <label>Gallery Name</label>
-            <input type="text" />
+            <input type="text" #newImageGalleryName/>
           </div>
         </div>
-        
-        <div class="upload-contaier" (click)="imageInput.click()">
-          <div class="image-gallery-upload-container">
+        <input
+                  style="display: none"
+                  type="file" (change)="selectImagesForNewImageGallery($event)"
+                  multiple
+                  #galleryImageInput />
+
+        <div class="upload-container" (click)="galleryImageInput.click()">
+          <div class="image-gallery-upload-container" *ngIf="!selectedImagesForGallery">
+          </div>
+
+          <div *ngFor="let img of selectedImagesForGallery" style="margin: 10px">
+            <img [src]="img" height="150px" />
           </div>
         </div>
 
         <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Upload</div>
+          <div class="submit-btn" (click)="createNewImageGallery(newImageGalleryName.value)">Upload</div>
         </div>
       </div>
     </div>

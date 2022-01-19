@@ -1,14 +1,17 @@
 import { Injectable, SecurityContext } from '@angular/core';
 import { collection, collectionData, DocumentData, Firestore, limit, orderBy, query, where } from '@angular/fire/firestore';
-import { getBytes, ref, Storage } from '@angular/fire/storage';
+import { getBytes, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UUID } from 'angular2-uuid';
+import { DataUrl, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 import { Post } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Utils {
-  constructor(private fireStore: Firestore, private fireStorage: Storage, private domSanitizer: DomSanitizer) {}
+  constructor(private fireStore: Firestore, private fireStorage: Storage, private domSanitizer: DomSanitizer,
+    private imageCompress: NgxImageCompressService) {}
 
   getSafeUrlFromArrayBuffer(buffer: ArrayBuffer): string|null {
     var binary = '';
@@ -126,6 +129,23 @@ export class Utils {
     });
   }
 
+  compressAndUploadFile(imageBeforCompress: DataUrl, galleryName: string) {
+    console.warn('Size in bytes was:', this.imageCompress.byteCount(imageBeforCompress));
+    console.log("Compressing...")
+    this.imageCompress
+      .compressFile(imageBeforCompress, 20, 20)
+      .then(
+        (result: DataUrl) => {
+          var imgFile = this.dataUrlToBlob(result)
+
+          var imgRef = ref(this.fireStorage, `${galleryName}/${UUID.UUID()}`);
+          
+          uploadBytes(imgRef, imgFile).then((snapshot) => {
+            console.log(snapshot);
+          });
+        }
+      );
+  }
 
   private getImage(imageUrl: string): string {
     let imageSrc: string|null = '';
@@ -137,6 +157,27 @@ export class Utils {
 
     return imageSrc;
   }
+
+  private dataUrlToBlob(dataUrl: DataUrl) {
+    // convert base64 to raw binary data held in a string
+    var byteString = atob(dataUrl.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    //New Code
+    return new Blob([ab], {type: mimeString});
+  }
+
+
+
 
 
 }

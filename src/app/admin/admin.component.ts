@@ -13,6 +13,7 @@ import { Utils } from '../common/utils';
 import { setDoc, updateDoc } from '@firebase/firestore';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
+import { read } from 'fs';
 
 @Component({
   selector: 'app-admin',
@@ -34,8 +35,15 @@ export class AdminComponent implements OnInit {
   editPostPage: string;
   editPostId: string;
 
+  selectedImagesForGallery: any[];
+  selectedImagesDataUrl: any[];
+
   
-  constructor(private router: Router, private fireStore: Firestore, private fireStorage: Storage, private utils: Utils) {
+  constructor(private router: Router, 
+    private fireStore: Firestore, 
+    private fireStorage: Storage, 
+    private utils: Utils,
+    private sanitizer: DomSanitizer) {
     this.formTitle = "Homepage"
     this.currentPostContent = new FormControl("");
    }
@@ -124,5 +132,33 @@ export class AdminComponent implements OnInit {
   submitEditedPost() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
     setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
+  }
+
+  createNewImageGallery(galleryName: string) {
+    if(galleryName) {
+      for(let imageDataUrl of this.selectedImagesDataUrl) {
+        this.utils.compressAndUploadFile(imageDataUrl, galleryName);
+      }
+    }else {
+      alert("Enter Gallery Name")
+    }
+    
+  }
+
+  selectImagesForNewImageGallery(event: any) {
+    if(event.target.files.length>0) {
+      this.selectedImagesForGallery=[];
+      this.selectedImagesDataUrl = [];
+      
+      for(let f of event.target.files) {
+        var reader = new FileReader();
+        reader.readAsDataURL(f)
+        reader.onload = ev => {
+          this.selectedImagesDataUrl.push(reader.result)
+        }
+        let safeUrl =  this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(f));
+        this.selectedImagesForGallery.push(safeUrl)
+      }
+    }
   }
 }

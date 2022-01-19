@@ -97,7 +97,9 @@ mat-form-field {
 
 .upload-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    border: 2px dashed #4877cf;
+    flex-wrap: wrap;
 }
 
 .image-upload-container {
@@ -198,12 +200,10 @@ input {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 2px dashed #4877cf;
-    margin-left:1vw;
-    margin-bottom: 1vw;
     height: 20vw;
     width:80vw;
     cursor: pointer;
+    width: 100%;
 
     background-size: 20vw;
     background-image: url("/assets/admin/image.png");
