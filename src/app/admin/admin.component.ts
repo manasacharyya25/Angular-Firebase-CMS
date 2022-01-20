@@ -99,12 +99,26 @@ export class AdminComponent implements OnInit {
     setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.toFirestore(newPost));
   }
 
+  createNewNotification() {
+    let newNotification =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", "");
+    setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.toFirestore(newNotification));
+  }
+
   getPostsToEdit() {
     this.utils.getPostsByCategory("Post").then((respone: Post[]) => {
       //TODO: Paginate Results or Just Search
       this.recentPosts = respone;
     });
   }
+
+
+  getNotificationsToEdit() {
+    this.utils.getPostsByCategory("Notification").then((respone: Post[]) => {
+      //TODO: Paginate Results or Just Search
+      this.recentPosts = respone;
+    });
+  }
+
 
   async searchPost(search_term: string) {
     this.showEditPost = false;
@@ -131,6 +145,11 @@ export class AdminComponent implements OnInit {
 
   submitEditedPost() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
+    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
+  }
+
+  submitEditedNotification() {
+    let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", this.editPostPage);
     setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
   }
 

@@ -22,6 +22,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './common/SafeHtmlPipe';
 import { TopbarComponent } from './topbar/topbar.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TopbarComponent } from './topbar/topbar.component';
     AdminComponent,
     ImagesComponent,
     SafeHtmlPipe,
-    TopbarComponent
+    TopbarComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

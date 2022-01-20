@@ -1,0 +1,57 @@
+<div class="news-marquee-1" *ngIf="showNotifications">
+    <div class="news-header">News & Updates</div>
+    <marquee behavior="scroll" direction="up" scrollamount="5" style="height: inherit;">
+        <div class="news" *ngFor="let notification of notifications">
+            <div class="news">
+                <div class="news-header">
+                    <div class="news-title">{{notification.title}}</div>
+                    <div class="news-date">{{notification.date}}</div>
+                </div>
+                <div class="news-text" [innerHtml]="notification.content">
+                </div>
+    
+            </div>
+        </div>
+        <div class="news">
+            <div class="news-header">
+                <div class="news-title">School Reopens</div>
+                <div class="news-date">27.01.2021</div>
+            </div>
+            <div class="news-text">
+                School will reopen on 10th January 2022
+            </div>
+
+        </div>
+        <div class="news">
+            <div class="news-header">
+                <div class="news-title">Vaccancy</div>
+                <div class="news-date">27.01.2021</div>
+            </div>
+            <div class="news-text">
+                Vaccancy of TGT (Mathematics, Science), Accountant, Clerk. Last Date 24th December 2021
+            </div>
+        </div>
+        <div class="news">
+            <div class="news-header">
+                <div class="news-title">Covid-19 Vaccinations</div>
+                <div class="news-date">27.01.2021</div>
+            </div>
+            <div class="news-text">
+                Covid-19 Vaccination Center at AFS Chabua from 18 Feb 2020
+            </div>
+
+        </div>
+
+        <div class="news">
+            <div class="news-header">
+                <div class="news-title">Covid-19 Vaccinations</div>
+                <div class="news-date">27.01.2021</div>
+            </div>
+            <div class="news-text">
+                Covid-19 Vaccination Center at AFS Chabua from 18 Feb 2020
+            </div>
+
+        </div>
+        
+    </marquee>
+</div>

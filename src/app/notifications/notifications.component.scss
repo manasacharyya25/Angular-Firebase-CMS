@@ -1,0 +1,82 @@
+.news-marquee-1 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: inherit;
+    align-self: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 7vw;
+}
+
+.news-header {
+    background-color: #222222;
+    width: inherit;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    line-height: 2vw;
+    color: white;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    text-transform: capitalize;
+}
+
+.news {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    height: 6vw;
+    width: 85%;
+    margin-bottom: 1vw;
+    padding: 5px 10px;
+    overflow: hidden;
+}
+
+.news-header {
+    display: flex;
+    flex-direction: rows;
+    justify-content: space-between;
+    width: 100%;
+    background-color: inherit ;
+    height: 3vw;
+}
+
+.news-title {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1vw;
+    line-height: 1vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: black
+}
+
+.news-date {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    color: #7D7D7D;
+}
+
+.news-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1vw;
+    line-height: 1vw;
+    text-align: justify;
+    letter-spacing: 0.095em;
+    overflow: hidden;
+}

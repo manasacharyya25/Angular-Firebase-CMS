@@ -10,8 +10,6 @@
     </mat-sidenav-container>
   </mat-drawer>
 
-
-
   <mat-drawer-content class="content">
     <div class="heading">{{formTitle}}</div>
 
@@ -470,7 +468,7 @@
             
             <div class="input-div">
               <label>Title</label>
-              <input type="text" />
+              <input type="text" [(ngModel)]="currentPostTitle" />
             </div>
             
             <div class="editor-container">
@@ -510,12 +508,10 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="submit()">Submit</div>
+            <div class="submit-btn" (click)="createNewNotification()">Submit</div>
           </div>
           </mat-expansion-panel>
-        </mat-accordion>
-        <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel (click)="getNotificationsToEdit()">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Edit Notification
@@ -524,45 +520,44 @@
 
             <div class="input-div">
               <label>Serach Notification</label>
-              <input type="text" />
+              <input #search_text type="text" />
+              <img src="assets/admin/search-solid.svg" height="24px" class="search-button" (click)="searchNotification(search_text.value)"/>
             </div>
 
-            <div class="search-resultset">
-              <div class="search-result">
-                <div>#1</div>
-                <div>School Reopens</div>
-                <div>27/01/2020</div>
-              </div>
-              <div class="search-result">
-                <div>#2</div>
-                <div>Covid Vaccination Drive</div>
-                <div>05/03/2021</div>
-              </div>
-              <div class="search-result">
-                <div>#3</div>
-                <div>HM Message</div>
-                <div>20/05/2021</div>
-              </div>
-              <div class="search-result">
-                <div>#4</div>
-                <div>Vaccancies</div>
-                <div>010/01/2022</div>
+            <div class="search-resultset" *ngIf="!showSearchResults&&!showEditPost">
+              <div class="search-result" *ngFor="let post of recentPosts">
+                <div style="min-width: 100px;">{{post.title}}</div>
+                <div>{{post.date}}</div>
+                <div>
+                  <img src="assets/admin/external-link.svg" alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(post.title)"/>
+                  <img src="assets/admin/edit.svg" alt="Edit" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="editPost(post)"/>
+                  <img src="assets/admin/trash.svg" alt="Delete" height="15px" style="cursor: pointer;"/>
+                </div>
               </div>
             </div>
-            
-            <div class="edit-post">
+
+            <div class="search-resultset" *ngIf="showSearchResults&&!showEditPost">
+              <div class="search-result" *ngIf="searchResult.id">
+                <div>{{searchResult.title}}</div>
+                <div>{{searchResult.date}}</div>
+                <div>
+                  <img src="assets/admin/external-link.svg"  alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(searchResult.title)"/>
+                  <img src="assets/admin/edit.svg" height="15px" alt="Edit" style="margin-right: 10px;cursor: pointer;" (click)="editPost(searchResult)"/>
+                  <img src="assets/admin/trash.svg" height="15px" alt="Delete" style="cursor: pointer;"/>
+                </div>
+              </div>
+
+              <div class="search-result" *ngIf="!searchResult.id">
+                <div>{{searchResult.id}}</div>
+                <div>{{searchResult.title}}</div>
+                <div>{{searchResult.date}}</div>
+              </div>
+            </div>
+
+            <div class="edit-post" *ngIf="showEditPost">
               <div class="input-div">
                 <label>Title</label>
-                <input type="text" />
-                <select>
-                  <option disabled selected>Main Menu</option>
-                  <option>Home</option>
-                  <option>About Us</option>
-                  <option>Facilities</option>
-                  <option>Administration</option>
-                  <option>Admission</option>
-                  <option>Miscellaneous</option>
-                </select>
+                <input type="text" [(ngModel)]="currentPostTitle"/>
               </div>
               
               <div class="editor-container">
@@ -603,7 +598,7 @@
               </div>
               
             <div class="submit-btn-holder">
-              <div class="submit-btn" (click)="submit()">Submit</div>
+              <div class="submit-btn" (click)="submitEditedNotification()">Submit</div>
             </div>
             </div>
           </mat-expansion-panel>
