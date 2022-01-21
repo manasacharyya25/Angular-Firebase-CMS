@@ -28,7 +28,11 @@
             <!-- <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]" class="each-gallery" (click)="showImageSlider()">
             </div> -->
 
-            <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]" class="each-gallery" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
+            <div *ngFor="let f of galleryFolders" class="each-gallery-container" (click)="openGallery(f.folderPath)">
+                <div class="each-gallery">
+                    <img [src]='f.folderThumbnailPath' width="150px" height="100px" />
+                    <div class="folder-name">{{f.folderName}}</div>
+                </div>
             </div>
         </div>
 

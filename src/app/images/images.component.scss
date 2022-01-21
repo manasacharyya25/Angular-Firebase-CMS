@@ -115,9 +115,25 @@
     justify-content: center;
 }
 
+.each-gallery-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & .folder-name {
+        color: rgb(57, 57, 58);
+        font-family: Roboto Slab;
+        font-size: 1.5vw;
+        padding: 0.5vw;
+    }
+}
+
 .each-gallery {
-    width: 15vw;
-    height: 15vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
     background-color: aquamarine;
     margin: 2vw;

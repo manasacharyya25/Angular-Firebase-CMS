@@ -1,3 +1,4 @@
+import { SafeUrl } from "@angular/platform-browser";
 import { UUID } from "angular2-uuid";
 
 export class Post {
@@ -7,7 +8,7 @@ export class Post {
     date: string;
     category: string;
     page: string
-    imageUrl: string|undefined;
+    imageUrl: SafeUrl|string|undefined;
     attachmentUrl: string|undefined;
 
     public constructor(id: string, title: string, content: string, date: string, category: string, page: string, imageUrl?: string, attachmentUrl?: string) {
@@ -21,7 +22,7 @@ export class Post {
         this.attachmentUrl = attachmentUrl;
     }
 
-    public setImageUrl(image: string) {
+    public setImageUrl(image: string|SafeUrl) {
         this.imageUrl = image;
     }
 

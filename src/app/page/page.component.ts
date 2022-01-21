@@ -1,6 +1,7 @@
 import { Component, OnInit, Query } from '@angular/core';
 import { collection, collectionData, DocumentData, Firestore, query, where } from '@angular/fire/firestore';
 import { getBytes, ref, Storage } from '@angular/fire/storage';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Utils } from '../common/utils';
 import { Post } from '../models/post.model';
@@ -61,7 +62,7 @@ export class PageComponent implements OnInit {
         );
 
         if (postResponse.imageUrl) {
-          postResponse.setImageUrl(this.getImage(post.imageUrl));
+          // postResponse.setImageUrl(this.getImage(post.imageUrl));
         }
 
         this.pagePost = postResponse;
@@ -70,14 +71,15 @@ export class PageComponent implements OnInit {
     });
   }
 
-  private getImage(imageUrl: string): string {
-    let imageSrc: string|null = '';
+  private getImage(imageUrl: string|SafeUrl|null): SafeUrl|null {
+    let imageSrc: SafeUrl;
 
     const gsReference = ref(this.fireStorage, 'gs://school-cms-966e4.appspot.com/Featured Content');
     var x  = getBytes(gsReference).then((buffer: ArrayBuffer) => {
         imageSrc = this.utils.getSafeUrlFromArrayBuffer(buffer);
+        return imageSrc;
     });
 
-    return imageSrc;
+    return null;
 }
 }

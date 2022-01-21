@@ -1,7 +1,8 @@
 import { Injectable, SecurityContext } from '@angular/core';
 import { collection, collectionData, DocumentData, Firestore, limit, orderBy, query, where } from '@angular/fire/firestore';
 import { getBytes, ref, Storage, uploadBytes } from '@angular/fire/storage';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { list, listAll } from '@firebase/storage';
 import { UUID } from 'angular2-uuid';
 import { DataUrl, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 import { Post } from '../models/post.model';
@@ -13,7 +14,7 @@ export class Utils {
   constructor(private fireStore: Firestore, private fireStorage: Storage, private domSanitizer: DomSanitizer,
     private imageCompress: NgxImageCompressService) {}
 
-  getSafeUrlFromArrayBuffer(buffer: ArrayBuffer): string|null {
+  getSafeUrlFromArrayBuffer(buffer: ArrayBuffer): SafeUrl{
     var binary = '';
     var bytes = new Uint8Array(buffer);
     var len = bytes.byteLength;
@@ -22,7 +23,8 @@ export class Utils {
     }
     var base64String = btoa(binary);
     var safeUrl =  this.domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-    return this.domSanitizer.sanitize(SecurityContext.URL, safeUrl)
+    // return this.domSanitizer.sanitize(SecurityContext.URL, safeUrl)
+    return safeUrl;
   }
 
   async getPostByCategory(category: string): Promise<Post> {
@@ -47,7 +49,9 @@ export class Utils {
           );
 
           if (postResponse.imageUrl) {
-            postResponse.setImageUrl(this.getImage(post.imageUrl));
+            this.getImage(post.imageUrl).then( response => {
+              postResponse.setImageUrl(response);
+            });
           }
           resolve(postResponse);
         });
@@ -147,15 +151,16 @@ export class Utils {
       );
   }
 
-  private getImage(imageUrl: string): string {
-    let imageSrc: string|null = '';
+  getImage(imageUrl: string): Promise<SafeUrl> {
+    return new Promise<SafeUrl>((resolve)=> {
+      let imageSrc: SafeUrl;
 
-    const gsReference = ref(this.fireStorage, 'gs://school-cms-966e4.appspot.com/Featured Content');
-    var x  = getBytes(gsReference).then((buffer: ArrayBuffer) => {
-        imageSrc = this.getSafeUrlFromArrayBuffer(buffer);
-    });
-
-    return imageSrc;
+      const gsReference = ref(this.fireStorage, `gs://school-cms-966e4.appspot.com/${imageUrl}`);
+      getBytes(gsReference).then((buffer: ArrayBuffer) => {
+          imageSrc = this.getSafeUrlFromArrayBuffer(buffer);
+          resolve(imageSrc);
+      });
+    })
   }
 
   private dataUrlToBlob(dataUrl: DataUrl) {
