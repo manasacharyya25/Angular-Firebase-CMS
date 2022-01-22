@@ -1,5 +1,24 @@
 <div class="homepage">
+    
     <div class="homepage-heroimage-container">
+        <swiper
+            [spaceBetween]="30"
+            [centeredSlides]="true"
+            [autoplay]="{
+            delay: 2500,
+            disableOnInteraction: false
+            }"
+            [pagination]="{
+            clickable: true
+            }"
+            [navigation]="true"
+            class="mySwiper"
+        >
+            <ng-template swiperSlide><img src="assets/homepage/history.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/homepage/hero.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/homepage/mission.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/homepage/hm.png" /></ng-template>
+        </swiper>
     </div>
 
     <div class="homepage-content-container">

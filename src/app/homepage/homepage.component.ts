@@ -8,6 +8,11 @@ import { doc, getDoc } from '@firebase/firestore';
 import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
 
+import { SwiperComponent } from "swiper/angular";
+import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
+
+SwiperCore.use([Autoplay, Pagination, Navigation]);
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',

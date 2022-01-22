@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SafeHtmlPipe } from './common/SafeHtmlPipe';
 import { TopbarComponent } from './topbar/topbar.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { SwiperModule } from "swiper/angular";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
-    HttpClientModule
+    HttpClientModule,
+    SwiperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
