@@ -73,19 +73,20 @@ export class AdminComponent implements OnInit {
 
   uploadImageForPost(event: any, postName: string) {
     var imageFile = event.target.files[0];
+    var imageDataUrl: string = '';
 
-    var imgRef = ref(this.fireStorage, postName);
-
-    uploadBytes(imgRef, imageFile).then((snapshot) => {
-      console.log(snapshot);
-    });
-
+    var reader = new FileReader();
+    reader.readAsDataURL(imageFile)
+    reader.onload = ev => {
+      imageDataUrl = reader.result?.toString() || '';
+      this.utils.compressAndUploadFile(imageDataUrl, postName);
+    }
   }
 
   submit(category: string) {
     this.utils.getPostByCategory(category).then(post=> {
       if(post.title || post.content || post.imageUrl || post.attachmentUrl || post.category) {
-        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
+        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage", category);
         setDoc(doc(this.fireStore, "posts", post.id), FirebaseConverters.toFirestore(newPost));
       }else {
         let newPost =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
@@ -156,7 +157,7 @@ export class AdminComponent implements OnInit {
   createNewImageGallery(galleryName: string) {
     if(galleryName) {
       for(let imageDataUrl of this.selectedImagesDataUrl) {
-        this.utils.compressAndUploadFile(imageDataUrl, galleryName);
+        this.utils.compressAndUploadFile(imageDataUrl, `Gallery/${galleryName}/${UUID.UUID()}`);
       }
     }else {
       alert("Enter Gallery Name")
@@ -170,14 +171,19 @@ export class AdminComponent implements OnInit {
       this.selectedImagesDataUrl = [];
       
       for(let f of event.target.files) {
-        var reader = new FileReader();
-        reader.readAsDataURL(f)
-        reader.onload = ev => {
-          this.selectedImagesDataUrl.push(reader.result)
-        }
-        let safeUrl =  this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(f));
-        this.selectedImagesForGallery.push(safeUrl)
+        setTimeout(() => {
+          let reader = new FileReader();
+          console.log(f);
+          reader.readAsDataURL(f)
+          reader.onloadend = ev => {
+            this.selectedImagesDataUrl.push(reader.result)
+          }
+          let safeUrl =  this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(f));
+          this.selectedImagesForGallery.push(safeUrl)
+        }, 1000);
       }
+      console.log(this.selectedImagesForGallery);
+      console.log(this.selectedImagesDataUrl);
     }
   }
 }

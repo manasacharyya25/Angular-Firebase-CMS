@@ -133,7 +133,7 @@ export class Utils {
     });
   }
 
-  compressAndUploadFile(imageBeforCompress: DataUrl, galleryName: string) {
+  compressAndUploadFile(imageBeforCompress: DataUrl, fileName: string) {
     console.warn('Size in bytes was:', this.imageCompress.byteCount(imageBeforCompress));
     console.log("Compressing...")
     this.imageCompress
@@ -141,8 +141,9 @@ export class Utils {
       .then(
         (result: DataUrl) => {
           var imgFile = this.dataUrlToBlob(result)
+          console.log("Got Blob")
 
-          var imgRef = ref(this.fireStorage, `${galleryName}/${UUID.UUID()}`);
+          var imgRef = ref(this.fireStorage, fileName);
           
           uploadBytes(imgRef, imgFile).then((snapshot) => {
             console.log(snapshot);

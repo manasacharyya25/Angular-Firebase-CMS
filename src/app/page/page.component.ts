@@ -14,6 +14,7 @@ import { Post } from '../models/post.model';
 export class PageComponent implements OnInit {
   pagePost: Post;
   showPost: boolean;
+  postImage: SafeUrl|null;
 
   constructor(private route: ActivatedRoute, 
     private router: Router,
@@ -51,30 +52,41 @@ export class PageComponent implements OnInit {
         // TODO: Redirect to 404;
         this.router.navigate(['']);
       }
-      response.forEach((post: any) => {
+      response.forEach(async (post: any) => {
+        console.log(post);
         postResponse = new Post(
           post.id,
           post.title,
           post.content,
           post.date,
           post.category,
-          post.page
+          post.page,
+          post.imageUrl
         );
 
         if (postResponse.imageUrl) {
-          // postResponse.setImageUrl(this.getImage(post.imageUrl));
-        }
+          console.log("Image Found");
+          // this.postImage = await this.getImage(post.imageUrl);
+          // console.log(this.postImage)
 
+          const gsReference = ref(this.fireStorage, postResponse.category);
+          await getBytes(gsReference).then((buffer: ArrayBuffer) => {
+            this.postImage = this.utils.getSafeUrlFromArrayBuffer(buffer);
+          });
+        }
+        
+        console.log(this.postImage)
         this.pagePost = postResponse;
+        // console.log(postResponse)
         this.showPost = true;
       });
     });
   }
 
-  private getImage(imageUrl: string|SafeUrl|null): SafeUrl|null {
+  private getImage(imageUrl: string): SafeUrl|null {
     let imageSrc: SafeUrl;
-
-    const gsReference = ref(this.fireStorage, 'gs://school-cms-966e4.appspot.com/Featured Content');
+    
+    const gsReference = ref(this.fireStorage, imageUrl);
     var x  = getBytes(gsReference).then((buffer: ArrayBuffer) => {
         imageSrc = this.utils.getSafeUrlFromArrayBuffer(buffer);
         return imageSrc;

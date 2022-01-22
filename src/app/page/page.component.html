@@ -8,7 +8,7 @@
         <div class="hmmessage-container" *ngIf="showPost">
             <div class="hm-header">{{pagePost.title}}</div>
             <div style="padding:2vw 5vw; overflow: hidden;max-height: 70%;" >
-                <img [src]="pagePost.imageUrl" width="45%" class="post-image" *ngIf="pagePost.imageUrl" />
+                <img [src]="postImage" width="45%" class="post-image" *ngIf="pagePost.imageUrl" />
                 
                 <div [innerHTML]="pagePost.content | safeHtml"></div>
 
