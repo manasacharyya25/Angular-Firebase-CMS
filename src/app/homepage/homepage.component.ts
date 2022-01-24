@@ -8,7 +8,6 @@ import { doc, getDoc } from '@firebase/firestore';
 import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
 
-import { SwiperComponent } from "swiper/angular";
 import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -36,7 +35,7 @@ export class HomepageComponent implements OnInit {
   onClick() {
     const postsCollection = collection(this.fireStore, "posts");
 
-    addDoc(postsCollection, FirebaseConverters.toFirestore(new Post("", "ABC", "abd", new Date().toLocaleDateString(), "casdf", "pagd"))).then(response => console.log(response));
+    addDoc(postsCollection, FirebaseConverters.postToFirestore(new Post("", "ABC", "abd", new Date().toLocaleDateString(), "casdf", "pagd"))).then(response => console.log(response));
   }
 
   onGet() {

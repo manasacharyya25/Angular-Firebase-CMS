@@ -24,6 +24,7 @@ import { SafeHtmlPipe } from './common/SafeHtmlPipe';
 import { TopbarComponent } from './topbar/topbar.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { SwiperModule } from "swiper/angular";
+import { MembersPageComponent } from './members-page/members-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SwiperModule } from "swiper/angular";
     ImagesComponent,
     SafeHtmlPipe,
     TopbarComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    MembersPageComponent
   ],
   imports: [
     BrowserModule,

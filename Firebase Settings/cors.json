@@ -1,6 +1,6 @@
 [
     {
-        "origin": ["http://localhost:4200"],
+        "origin": ["http://localhost:4200", "https://afschabua.netlify.app/"],
         "method": ["GET"],
         "maxAgeSeconds": 3600
     }

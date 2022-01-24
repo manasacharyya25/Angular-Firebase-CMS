@@ -10,10 +10,11 @@ import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utils } from '../common/utils';
-import { setDoc, updateDoc } from '@firebase/firestore';
+import { deleteDoc, setDoc, updateDoc } from '@firebase/firestore';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
 import { read } from 'fs';
+import { Member } from '../common/member.model';
 
 @Component({
   selector: 'app-admin',
@@ -38,6 +39,8 @@ export class AdminComponent implements OnInit {
   selectedImagesForGallery: any[];
   selectedImagesDataUrl: any[];
 
+  membersList: Member[];
+
   
   constructor(private router: Router, 
     private fireStore: Firestore, 
@@ -50,6 +53,7 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     let currentPostCategory = "Featured Content"
+    this.membersList = [new Member('', '', '', '', '')];
     await this.updateCurrentPost(currentPostCategory);
   }
 
@@ -72,6 +76,7 @@ export class AdminComponent implements OnInit {
   }
 
   uploadImageForPost(event: any, postName: string) {
+    console.log(postName)
     var imageFile = event.target.files[0];
     var imageDataUrl: string = '';
 
@@ -87,22 +92,22 @@ export class AdminComponent implements OnInit {
     this.utils.getPostByCategory(category).then(post=> {
       if(post.title || post.content || post.imageUrl || post.attachmentUrl || post.category) {
         let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage", category);
-        setDoc(doc(this.fireStore, "posts", post.id), FirebaseConverters.toFirestore(newPost));
+        setDoc(doc(this.fireStore, "posts", post.id), FirebaseConverters.postToFirestore(newPost));
       }else {
         let newPost =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
-        setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.toFirestore(newPost));
+        setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
       }
     });
   }
 
   createNewPostByTitle() {
     let newPost =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.newPostPage);
-    setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.toFirestore(newPost));
+    setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
   }
 
   createNewNotification() {
     let newNotification =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", "");
-    setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.toFirestore(newNotification));
+    setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.postToFirestore(newNotification));
   }
 
   getPostsToEdit() {
@@ -146,12 +151,12 @@ export class AdminComponent implements OnInit {
 
   submitEditedPost() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
-    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
+    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
   }
 
   submitEditedNotification() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", this.editPostPage);
-    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.toFirestore(editedPost));
+    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
   }
 
   createNewImageGallery(galleryName: string) {
@@ -185,5 +190,47 @@ export class AdminComponent implements OnInit {
       console.log(this.selectedImagesForGallery);
       console.log(this.selectedImagesDataUrl);
     }
+  }
+
+  removeMember(i: number) {
+    this.membersList = this.membersList.slice(0, i).concat(this.membersList.slice(i+1))
+    console.log(i);
+  }
+
+  addNewMemberPlaceholder() {
+    this.membersList.push(new Member('','','','',''))
+  }
+
+  uploadImageForMember(event: any, member: Member) {
+    let f = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(f)
+    reader.onloadend = ev => {
+      member.imageSrc =  this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(f));
+      member.imageName = f.name;
+      member.imageDataUrl = reader.result?.toString() || '';
+    }
+  }
+
+  clearMembersList() {
+    const membersCollection = collection(this.fireStore, 'members');
+    let q = query(membersCollection);
+    collectionData(q).forEach((response: DocumentData[])=> {
+      response.forEach((member:any)=> {
+        if(member.name!="Dont Delete") {
+          deleteDoc(doc(this.fireStore, "members", member.id))
+        }
+      })
+    });
+  }
+
+  async submitMembersList() {
+    this.membersList.forEach(async member => {
+      let memberId = UUID.UUID();
+      await setDoc(doc(this.fireStore, "members", memberId), FirebaseConverters.memberToFirestore(memberId, member)).then(response => console.log(response));
+      if(member.imageName) {
+        await this.utils.compressAndUploadFile(member.imageDataUrl, `members/${member.imageName}`);
+      }
+    })
   }
 }

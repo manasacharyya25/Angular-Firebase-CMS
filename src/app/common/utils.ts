@@ -134,14 +134,17 @@ export class Utils {
   }
 
   compressAndUploadFile(imageBeforCompress: DataUrl, fileName: string) {
-    console.warn('Size in bytes was:', this.imageCompress.byteCount(imageBeforCompress));
+    let imgSize = this.imageCompress.byteCount(imageBeforCompress);
+
+    if(imgSize > 1000000) {
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(imageBeforCompress));
     console.log("Compressing...")
+    
     this.imageCompress
-      .compressFile(imageBeforCompress, 20, 20)
+      .compressFile(imageBeforCompress, 80, 80)
       .then(
         (result: DataUrl) => {
           var imgFile = this.dataUrlToBlob(result)
-          console.log("Got Blob")
 
           var imgRef = ref(this.fireStorage, fileName);
           
@@ -150,6 +153,14 @@ export class Utils {
           });
         }
       );
+    } else {
+      var imgFile = this.dataUrlToBlob(imageBeforCompress)
+      var imgRef = ref(this.fireStorage, fileName);
+      
+      uploadBytes(imgRef, imgFile).then((snapshot) => {
+        console.log(snapshot);
+      });
+    }
   }
 
   getImage(imageUrl: string): Promise<SafeUrl> {

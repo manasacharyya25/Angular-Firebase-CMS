@@ -30,7 +30,7 @@
 
             <div *ngFor="let f of galleryFolders" class="each-gallery-container" (click)="openGallery(f.folderPath)">
                 <div class="each-gallery">
-                    <img [src]='f.folderThumbnailPath' width="150px" height="100px" />
+                    <img [src]='f.folderThumbnailPath' width="200px" height="100px" style="border-radius: 5px;"/>
                     <div class="folder-name">{{f.folderName}}</div>
                 </div>
             </div>

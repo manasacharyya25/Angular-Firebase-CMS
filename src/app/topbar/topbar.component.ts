@@ -32,7 +32,7 @@ export class TopbarComponent implements OnInit {
     });
   }
 
-  navigate(url: string) {
+  navigateTo(url: string) {
     this.router.navigate([url]);
   }
 
