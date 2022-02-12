@@ -30,7 +30,6 @@
             </div>
             
             <div class="editor-container">
-              <!-- <form (ngSubmit)="submit()" [formGroup]="featuredContentForm"> -->
                 <editor
                 [formControl]="currentPostContent"
                 [init]="{
@@ -44,18 +43,19 @@
                   toolbar:
                     'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    bullist numlist outdent indent table | removeformat | help'
                 }"
               ></editor>
             <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  type="file" (change)="selectImageForPost($event)"
                   #imageInput />
 
             <div class="upload-contaier" (click)="imageInput.click()">
               <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
-                <!-- <img [src]="imageUrl" width="100vw"/> -->
+                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
   
@@ -67,7 +67,7 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="submit('Featured Content')">Submit</div>
+            <div class="submit-btn" (click)="submitHomePagePost('Featured Content')">Submit</div>
           </div>
           </mat-expansion-panel>
         
@@ -96,22 +96,27 @@
                 toolbar:
                   'undo redo | formatselect | bold italic backcolor | \
                   alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help'
+                  bullist numlist outdent indent table | removeformat | help'
               }"
             ></editor>
             
-            <input
+            <div class="upload-contaier">
+              <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Top Post 01')"
+                  type="file" (change)="selectImageForPost($event)"
                   #image1Input />
-
-            <div class="upload-contaier" (click)="image1Input.click()">
-              <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
+              <div class="image-upload-container" (click)="image1Input.click()">
+                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
-  
-              <div class="file-upload-container">
+              
+              <input
+                  style="display: none"
+                  type="file" (change)="selectFileForPost($event)"
+                  #file1Input />
+              <div class="file-upload-container" (click)="file1Input.click()">
                 <p style="color:#666769">Upload Attachment</p>
               </div>
             </div>
@@ -119,7 +124,7 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="submit('Top Post 01')">Submit</div>
+            <div class="submit-btn" (click)="submitHomepagePost('Top Post 01')">Submit</div>
           </div>
           </mat-expansion-panel>
         
@@ -143,23 +148,25 @@
                 plugins: [
                   'advlist autolink lists link image charmap print preview anchor',
                   'searchreplace visualblocks code fullscreen',
-                  'insertdatetime media table paste code help wordcount'
+                  'insertdatetime media table paste code help wordcount',
                 ],
                 toolbar:
                   'undo redo | formatselect | bold italic backcolor | \
                   alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help'
+                  bullist numlist outdent indent table | removeformat | help'
               }"
             ></editor>
             
             <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Top Post 02')"
+                  type="file" (change)="selectImageForPost($event)"
                   #image2Input />
 
             <div class="upload-contaier" (click)="image2Input.click()">
               <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
+                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
   
@@ -171,7 +178,7 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="submit('Top Post 02')">Submit</div>
+            <div class="submit-btn" (click)="submitHomepagePost('Top Post 02')">Submit</div>
           </div>
           </mat-expansion-panel>
         
@@ -200,18 +207,20 @@
                 toolbar:
                   'undo redo | formatselect | bold italic backcolor | \
                   alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help'
+                  bullist numlist outdent indent table | removeformat | help'
               }"
             ></editor>
 
             <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Top Post 03')"
+                  type="file" (change)="selectImageForPost($event)"
                   #image3Input />
 
             <div class="upload-contaier" (click)="image3Input.click()">
               <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
+                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
   
@@ -223,7 +232,7 @@
             </div>
             
           <div class="submit-btn-holder">
-            <div class="submit-btn" (click)="submit('Top Post 03')">Submit</div>
+            <div class="submit-btn" (click)="submitHomepagePost('Top Post 03')">Submit</div>
           </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -268,19 +277,20 @@
                   toolbar:
                     'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    bullist numlist outdent indent table | removeformat | help'
                 }"
               ></editor>
               
             
             <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  type="file" (change)="selectImageForPost($event)"
                   #imageInput />
 
             <div class="upload-contaier" (click)="imageInput.click()">
               <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
+                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage"/>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
   
@@ -295,8 +305,6 @@
             <div class="submit-btn" (click)="createNewPostByTitle()">Submit</div>
           </div>
           </mat-expansion-panel>
-        </mat-accordion>
-        <mat-accordion>
           <mat-expansion-panel (click)="getPostsToEdit()">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -369,19 +377,21 @@
                     toolbar:
                       'undo redo | formatselect | bold italic backcolor | \
                       alignleft aligncenter alignright alignjustify | \
-                      bullist numlist outdent indent | removeformat | help'
+                      bullist numlist outdent indent table | removeformat | help'
                   }"
                 ></editor>
                 
               
               <input
                     style="display: none"
-                    type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                    type="file" (change)="selectImageForPost($event)"
                     #imageInput />
   
               <div class="upload-contaier" (click)="imageInput.click()">
                 <div class="image-upload-container">
-                  <img src="assets/admin/image.png" width="100vw"/>
+                  <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                   <p style="color:#666769">Upload Image</p>
                 </div>
     
@@ -430,13 +440,13 @@
                   toolbar:
                     'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help'
+                    bullist numlist outdent indent table | removeformat | help'
                 }"
               ></editor>
             
             <input
                   style="display: none"
-                  type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                  type="file" (change)="selectImageForPost($event)"
                   #imageInput />
 
             <div class="upload-contaier" (click)="imageInput.click()">
@@ -519,14 +529,14 @@
                     toolbar:
                       'undo redo | formatselect | bold italic backcolor | \
                       alignleft aligncenter alignright alignjustify | \
-                      bullist numlist outdent indent | removeformat | help'
+                      bullist numlist outdent indent table | removeformat | help'
                   }"
                 ></editor>
                 
               
               <input
                     style="display: none"
-                    type="file" (change)="uploadImageForPost($event, 'Featured Content')"
+                    type="file" (change)="selectImageForPost($event)"
                     #imageInput />
   
               <div class="upload-contaier" (click)="imageInput.click()">
@@ -650,7 +660,7 @@
           </div>
 
         <div class="submit-btn-holder">
-          <div class="submit-btn" (click)="submit()">Submit</div>
+          <div class="submit-btn" (click)="submitHomepagePost()">Submit</div>
         </div>
       </div>
     </div>

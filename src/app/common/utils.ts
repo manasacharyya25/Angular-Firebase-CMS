@@ -45,7 +45,9 @@ export class Utils {
             post.content,
             post.date,
             post.category,
-            post.page
+            post.page,
+            post.imageUrl,
+            post.attachmentUrl
           );
 
           if (postResponse.imageUrl) {
@@ -78,7 +80,9 @@ export class Utils {
             post.content,
             post.date,
             post.category,
-            post.page
+            post.page,
+            post.imageUrl,
+            post.attachmentUrl
           );
           postsList.push(postResponse)
         });
@@ -133,7 +137,7 @@ export class Utils {
     });
   }
 
-  compressAndUploadFile(imageBeforCompress: DataUrl, fileName: string) {
+  async compressAndUploadFile(imageBeforCompress: DataUrl, fileName: string) {
     let imgSize = this.imageCompress.byteCount(imageBeforCompress);
 
     if(imgSize > 1000000) {
@@ -143,12 +147,12 @@ export class Utils {
     this.imageCompress
       .compressFile(imageBeforCompress, 80, 80)
       .then(
-        (result: DataUrl) => {
+        async (result: DataUrl) => {
           var imgFile = this.dataUrlToBlob(result)
 
           var imgRef = ref(this.fireStorage, fileName);
           
-          uploadBytes(imgRef, imgFile).then((snapshot) => {
+          await uploadBytes(imgRef, imgFile).then((snapshot) => {
             console.log(snapshot);
           });
         }
@@ -193,7 +197,17 @@ export class Utils {
     return new Blob([ab], {type: mimeString});
   }
 
+  getSafeUrlForSelectedImage(file: any) {
+    return this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
+  }
 
+  async uploadAttachmentFile(file: any, filename: string) {
+    var imgRef = ref(this.fireStorage, filename);
+          
+    await uploadBytes(imgRef, file).then((snapshot) => {
+      console.log(snapshot);
+    });
+  }
 
 
 

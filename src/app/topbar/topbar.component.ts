@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { title } from 'process';
 import { Utils } from '../common/utils';
 
 @Component({
@@ -20,10 +21,12 @@ export class TopbarComponent implements OnInit {
   constructor(private router: Router, private utils: Utils) { }
 
   ngOnInit(): void {
+    // Always reload 
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
     this.utils.getNavbarLinks().then((response: Map<String, String[]>) => {
       this.navbarListMap = response;
       this.aboutUsLinks = response.get('About Us') || [];
-      console.log(this.aboutUsLinks)
       this.facilitiesLinks = response.get('Facilities') || [];
       this.administrationLinks = response.get('Administration') || [];
       this.admissionLinks = response.get('Admission') || [];
@@ -34,6 +37,18 @@ export class TopbarComponent implements OnInit {
 
   navigateTo(url: string) {
     this.router.navigate([url]);
+  }
+
+  navigateToPageWithTitle(link: string) {
+    if(link=='Management Committee' || link=='Staff'){
+      this.router.navigate(['members']);
+    }
+    else if(link=='Photo Gallery') {
+      this.router.navigate(['images']);
+    }
+    else {
+      this.router.navigate(['page'], { queryParams: {title: link}});
+    }
   }
 
 }

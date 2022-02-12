@@ -1,8 +1,9 @@
-import { Component, OnInit, Query } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { collection, collectionData, DocumentData, Firestore, query, where } from '@angular/fire/firestore';
 import { getBytes, ref, Storage } from '@angular/fire/storage';
 import { SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SafeHtmlPipe } from '../common/SafeHtmlPipe';
 import { Utils } from '../common/utils';
 import { Post } from '../models/post.model';
 
@@ -10,6 +11,7 @@ import { Post } from '../models/post.model';
   selector: 'app-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PageComponent implements OnInit {
   pagePost: Post;
@@ -33,8 +35,6 @@ export class PageComponent implements OnInit {
       pageCategory = params.get("category")
     })
 
-    console.log(pageTitle)
-
     const postCollection = collection(this.fireStore, 'posts');
     if(pageTitle) {
       q = query(postCollection, where('title', '==', pageTitle));
@@ -47,13 +47,11 @@ export class PageComponent implements OnInit {
 
 
     await collectionData(q).forEach((response: DocumentData[]) => {
-      console.log(response)
       if(response.length==0) {
         // TODO: Redirect to 404;
         this.router.navigate(['']);
       }
       response.forEach(async (post: any) => {
-        console.log(post);
         postResponse = new Post(
           post.id,
           post.title,
@@ -61,26 +59,39 @@ export class PageComponent implements OnInit {
           post.date,
           post.category,
           post.page,
-          post.imageUrl
+          post.imageUrl,
+          post.attachmentUrl
         );
 
         if (postResponse.imageUrl) {
-          console.log("Image Found");
-          // this.postImage = await this.getImage(post.imageUrl);
-          // console.log(this.postImage)
+          let gsReference = ref(this.fireStorage, postResponse.title);
 
-          const gsReference = ref(this.fireStorage, postResponse.category);
+          if(postResponse.page=="Homepage") {
+            gsReference = ref(this.fireStorage, postResponse.category);
+          }
+
           await getBytes(gsReference).then((buffer: ArrayBuffer) => {
             this.postImage = this.utils.getSafeUrlFromArrayBuffer(buffer);
           });
         }
         
-        console.log(this.postImage)
         this.pagePost = postResponse;
-        // console.log(postResponse)
         this.showPost = true;
       });
     });
+  }
+
+  downloadAttachment() {
+    const gsReference = ref(this.fireStorage, `files/${this.pagePost.category}`);
+    var x  = getBytes(gsReference).then((buffer: ArrayBuffer) => {
+      let blob = new Blob([buffer]);
+      let url = window.URL.createObjectURL(blob);
+      var anchor = document.createElement("a");
+      anchor.download = `${this.pagePost.title}.pdf`;
+      anchor.href = url;
+      anchor.click();
+    });
+    
   }
 
   private getImage(imageUrl: string): SafeUrl|null {

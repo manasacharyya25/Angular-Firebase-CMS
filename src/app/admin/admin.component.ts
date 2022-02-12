@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { getBytes, ref, uploadBytes  } from "firebase/storage";
 import { Storage } from '@angular/fire/storage';
 import { FormControl } from "@angular/forms";
 import {
-  Firestore, addDoc, collection, collectionData, query,
-  where, DocumentData, doc
+  Firestore, collection, collectionData, query,
+  DocumentData, doc
 } from '@angular/fire/firestore';
 import { FirebaseConverters } from '../models/firebase.converters';
 import { Post } from '../models/post.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utils } from '../common/utils';
-import { deleteDoc, setDoc, updateDoc } from '@firebase/firestore';
+import { deleteDoc, setDoc } from '@firebase/firestore';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
-import { read } from 'fs';
 import { Member } from '../common/member.model';
 
 @Component({
@@ -23,11 +21,15 @@ import { Member } from '../common/member.model';
 })
 export class AdminComponent implements OnInit {
 
+  /** Common Fields */
   formTitle: string;
   imageUrl: SafeUrl;
-
   currentPostTitle: string;
   currentPostContent : FormControl;
+  currentPostImage: SafeUrl;
+  currentPostAttachment: SafeUrl;
+  imageLoading: boolean;
+
   newPostPage: string;
   recentPosts: Post[];
   searchResult: Post;
@@ -40,6 +42,13 @@ export class AdminComponent implements OnInit {
   selectedImagesDataUrl: any[];
 
   membersList: Member[];
+
+  /** POST SECTION */
+  imageFile: any;
+  postHasImage: boolean;
+  currentPostCategory: string;
+  postHasAttachment: boolean;
+  attachmentFile: any;
 
   
   constructor(private router: Router, 
@@ -57,41 +66,66 @@ export class AdminComponent implements OnInit {
     await this.updateCurrentPost(currentPostCategory);
   }
 
-  async updateCurrentPost(currentPostCategory: string) {
-    let currentPost: Post = await this.utils.getPostByCategory(currentPostCategory)
+// #region Common Functions
+ clearPreviousPostDetailsFromEditor() {
+  this.currentPostImage = '';
+  this.currentPostAttachment = '';
+  this.currentPostTitle = '';
+  this.currentPostContent = new FormControl('');
+ }
+//#endregion
 
-    this.currentPostTitle = currentPost.title;
-    this.currentPostContent = new FormControl(currentPost.content);
-  }
+//#region  Sidebar Functions
 
   showForm(name: string) {
+    this.clearPreviousPostDetailsFromEditor();
     this.formTitle =  name;
-    if(this.formTitle!='Homepage') {
-      this.currentPostTitle = '';
-      this.currentPostContent = new FormControl('');
-    }
     if(this.formTitle=='Homepage') {
       this.updateCurrentPost('Featured Content')
     }
   }
 
-  uploadImageForPost(event: any, postName: string) {
-    console.log(postName)
-    var imageFile = event.target.files[0];
-    var imageDataUrl: string = '';
+//#endregion
 
-    var reader = new FileReader();
-    reader.readAsDataURL(imageFile)
-    reader.onload = ev => {
-      imageDataUrl = reader.result?.toString() || '';
-      this.utils.compressAndUploadFile(imageDataUrl, postName);
+//#region  Homepage Section
+  
+  async updateCurrentPost(currentPostCategory: string) {
+    if(this.currentPostCategory!=currentPostCategory) {
+      this.clearPreviousPostDetailsFromEditor();
+
+      this.utils.getPostByCategory(currentPostCategory).then(response => {
+        let currentPost = response;
+  
+        this.currentPostTitle = currentPost.title;
+        this.currentPostContent = new FormControl(currentPost.content);
+        this.currentPostCategory = currentPost.category;
+        
+        if(currentPost.imageUrl) {
+          this.imageLoading = true;
+          this.utils.getImage(currentPost.category).then(response => {
+            this.currentPostImage = response;
+            this.imageLoading = false;
+          });
+        }
+      })
     }
   }
 
-  submit(category: string) {
+  submitHomepagePost(category: string) {
     this.utils.getPostByCategory(category).then(post=> {
       if(post.title || post.content || post.imageUrl || post.attachmentUrl || post.category) {
-        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage", category);
+        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
+
+        if(this.postHasImage) {
+          this.uploadImageForPost(category)
+          newPost.imageUrl = category;
+        }
+
+        if(this.postHasAttachment) {
+          this.utils.uploadAttachmentFile(this.attachmentFile, `files/${category}`)
+          newPost.attachmentUrl = category;
+        }
+
         setDoc(doc(this.fireStore, "posts", post.id), FirebaseConverters.postToFirestore(newPost));
       }else {
         let newPost =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
@@ -100,22 +134,87 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  createNewPostByTitle() {
-    let newPost =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.newPostPage);
-    setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
+//#endregion
+
+// #region Post
+
+  selectFileForPost(event: any) {
+    this.attachmentFile = event.target.files[0];
+    this.postHasAttachment = true;
+
   }
+
+  selectImageForPost(event: any) {
+    this.imageFile = event.target.files[0];
+    this.currentPostImage = this.utils.getSafeUrlForSelectedImage(this.imageFile);
+    this.postHasImage = true;
+  }
+
+  async uploadImageForPost(postName: string) {
+    var imageDataUrl: string = '';
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.imageFile)
+    reader.onload = async ev => {
+      imageDataUrl = reader.result?.toString() || '';
+      await this.utils.compressAndUploadFile(imageDataUrl, postName);
+    }
+  }
+
+  async createNewPostByTitle() {
+    let imageName =  "";
+
+    if(this.postHasImage) {
+      await this.uploadImageForPost(this.currentPostTitle)
+      imageName = this.currentPostTitle;
+    }
+
+    let newPost =  new Post(UUID.UUID(),
+                            this.currentPostTitle,
+                            this.currentPostContent.value,
+                            new Date().toLocaleDateString(), 
+                            "Post",
+                            this.newPostPage,
+                            imageName);
+    await setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
+  }
+
+  getPostsToEdit() {
+    this.utils.getPostsByCategory("Post").then((respone: Post[]) => {
+      this.recentPosts = respone;
+    });
+  }
+
+  editPost(post: Post) {
+    this.showEditPost = true;
+    this.currentPostContent = new FormControl(post.content)
+    this.currentPostTitle = post.title
+    this.editPostPage = post.category;
+    this.editPostId = post.id;
+
+    if(post.imageUrl) {
+      this.imageLoading = true;
+      this.utils.getImage(this.currentPostTitle).then(response => {
+        this.currentPostImage = response;
+        this.imageLoading = false;
+      })
+    }
+  }
+
+  submitEditedPost() {
+    let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
+    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
+  }
+
+
+  //#endregion
 
   createNewNotification() {
     let newNotification =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", "");
     setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.postToFirestore(newNotification));
   }
 
-  getPostsToEdit() {
-    this.utils.getPostsByCategory("Post").then((respone: Post[]) => {
-      //TODO: Paginate Results or Just Search
-      this.recentPosts = respone;
-    });
-  }
+  
 
 
   getNotificationsToEdit() {
@@ -140,20 +239,9 @@ export class AdminComponent implements OnInit {
     window.open(`/page?title=${title}`, '_blank');
   }
 
-  editPost(post: Post) {
-    console.log()
-    this.currentPostContent = new FormControl(post.content)
-    this.currentPostTitle = post.title
-    this.editPostPage = post.category;
-    this.editPostId = post.id;
-    this.showEditPost = true;
-  }
+  
 
-  submitEditedPost() {
-    let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
-    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
-  }
-
+  
   submitEditedNotification() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", this.editPostPage);
     setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
@@ -234,3 +322,5 @@ export class AdminComponent implements OnInit {
     })
   }
 }
+
+

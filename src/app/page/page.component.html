@@ -3,17 +3,19 @@
     </div>
 
     <div class="homepage-content-container">
-        <app-topbar></app-topbar>
+        <app-topbar style="position: absolute; top: 10px; z-index: 5;"></app-topbar>
 
         <div class="hmmessage-container" *ngIf="showPost">
             <div class="hm-header">{{pagePost.title}}</div>
             <div style="padding:2vw 5vw; overflow: hidden;max-height: 70%;" >
-                <img [src]="postImage" width="45%" class="post-image" *ngIf="postImage" style="padding: 1vw;"/>
+                <img [src]="postImage" width="100%" class="post-image" *ngIf="postImage&&!pagePost.content" style="padding: 1vw; margin-top: 3vh;"/>
+
+                <img [src]="postImage" width="45%" class="post-image" *ngIf="postImage&&pagePost.content" style="padding: 1vw;"/>
                 
-                <div [innerHTML]="pagePost.content | safeHtml" ></div>
+                <div [innerHTML]="pagePost.content | safeHtml" *ngIf="pagePost.content"></div>
 
                 <div class="post-attachment-container" *ngIf="pagePost.attachmentUrl">
-                    <div class="post-attachment">
+                    <div class="post-attachment" (click)="downloadAttachment()" >
                         <img src="assets/page/download-solid.svg" width="15px" style="margin-right: 5px;"> Download Attachment
                     </div>
                 </div>

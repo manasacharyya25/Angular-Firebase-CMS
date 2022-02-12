@@ -15,16 +15,16 @@
             class="mySwiper"
         >
             <ng-template swiperSlide><img src="assets/hero-slider/1.jpg" /></ng-template>
-            <ng-template swiperSlide><img src="assets/hero-slider/2.jpeg" /></ng-template>
-            <ng-template swiperSlide><img src="assets/hero-slider/3.jpeg" /></ng-template>
-            <ng-template swiperSlide><img src="assets/hero-slider/4.jpeg" /></ng-template>
-            <ng-template swiperSlide><img src="assets/hero-slider/5.jpeg" /></ng-template>
-            <ng-template swiperSlide><img src="assets/hero-slider/6.jpeg" /></ng-template>
+            <ng-template swiperSlide><img src="assets/hero-slider/2.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/hero-slider/3.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/hero-slider/4.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/hero-slider/5.png" /></ng-template>
+            <ng-template swiperSlide><img src="assets/hero-slider/6.png" /></ng-template>
         </swiper>
     </div>
 
     <div class="homepage-content-container">
-        <app-topbar></app-topbar>
+        <app-topbar style="position: absolute; z-index: 5; top:10px;"></app-topbar>
         
         <div class="homepgae-mid-container">
             <div class="non_mobile_devices">
@@ -180,5 +180,6 @@
         <div class="footer">
             <div class="terms-of-use">Terms of Use . Privacy Policy</div>
             <div class="copyright"><img src="assets/homepage/copyright.svg" width="15vw" height="15vw"/><span>2021 Air Force School Chabua</span> </div>
+            <div class="terms-of-use" routerLink="admin">Admin Login</div>
         </div>
 </div>

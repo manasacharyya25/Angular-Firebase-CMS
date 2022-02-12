@@ -13,28 +13,27 @@
         <div class="navbar-link">
             &nbsp;About Us&nbsp;
             <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of aboutUsLinks">{{link}}</li>
+                <li class="navbar-links" *ngFor="let link of aboutUsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">&nbsp;Facilities&nbsp;
             <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of facilitiesLinks" (click)="navigateTo('members')">{{link}}</li>
+                <li class="navbar-links" *ngFor="let link of facilitiesLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">&nbsp;&nbsp;Administration&nbsp;&nbsp;
             <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of administrationLinks">{{link}}</li>
+                <li class="navbar-links" *ngFor="let link of administrationLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
             </div>
         </div>
         <div class="navbar-link">&nbsp;&nbsp;Admission&nbsp;&nbsp;
             <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of admissionLinks">{{link}}</li>
+                <li class="navbar-links" *ngFor="let link of admissionLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
             </div>
         </div>
-        <div class="navbar-link" style="border-radius: 0 5px 5px 0; padding:1vw;">&nbsp;Miscellaneous&nbsp;&nbsp;
+        <div class="navbar-link" style="border-radius: 0 5px 5px 0;">&nbsp;Miscellaneous&nbsp;&nbsp;
             <div class="sublink">
-                <li class="navbar-links" (click)="navigateTo('images')">Gallery</li>
-                <li class="navbar-links" *ngFor="let link of miscellaneousLinks">{{link}}</li>
+                <li class="navbar-links" *ngFor="let link of miscellaneousLinks" (click)="navigateTo('images')">{{link}}</li>
             </div>
         </div>
     </div>
