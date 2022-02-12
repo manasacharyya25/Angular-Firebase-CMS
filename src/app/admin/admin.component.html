@@ -46,23 +46,27 @@
                     bullist numlist outdent indent table | removeformat | help'
                 }"
               ></editor>
-            <input
-                  style="display: none"
-                  type="file" (change)="selectImageForPost($event)"
-                  #imageInput />
 
-            <div class="upload-contaier" (click)="imageInput.click()">
-              <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
-                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
-                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
-                <p style="color:#666769">Upload Image</p>
+              <div class="upload-contaier">
+                <input
+                    style="display: none"
+                    type="file" (change)="selectImageForPost($event)"
+                    #image1Input />
+                <div class="image-upload-container" (click)="image1Input.click()">
+                  <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                  <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                  <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
+                  <p style="color:#666769">Upload Image</p>
+                </div>
+                
+                <input
+                    style="display: none"
+                    type="file" (change)="selectFileForPost($event)"
+                    #file1Input />
+                <div class="file-upload-container" (click)="file1Input.click()">
+                  <p style="color:#666769">Upload Attachment</p>
+                </div>
               </div>
-  
-              <div class="file-upload-container">
-                <p style="color:#666769">Upload Attachment</p>
-              </div>
-            </div>
   
             </div>
             
@@ -157,20 +161,23 @@
               }"
             ></editor>
             
-            <input
+            <div class="upload-contaier">
+              <input
                   style="display: none"
                   type="file" (change)="selectImageForPost($event)"
                   #image2Input />
-
-            <div class="upload-contaier" (click)="image2Input.click()">
-              <div class="image-upload-container">
+              <div class="image-upload-container" (click)="image2Input.click()">
                 <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
                 <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
                 <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
-  
-              <div class="file-upload-container">
+              
+              <input
+                  style="display: none"
+                  type="file" (change)="selectFileForPost($event)"
+                  #file2Input />
+              <div class="file-upload-container" (click)="file2Input.click()">
                 <p style="color:#666769">Upload Attachment</p>
               </div>
             </div>
@@ -211,20 +218,23 @@
               }"
             ></editor>
 
-            <input
+            <div class="upload-contaier">
+              <input
                   style="display: none"
                   type="file" (change)="selectImageForPost($event)"
                   #image3Input />
-
-            <div class="upload-contaier" (click)="image3Input.click()">
-              <div class="image-upload-container">
+              <div class="image-upload-container" (click)="image3Input.click()">
                 <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
                 <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
                 <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
                 <p style="color:#666769">Upload Image</p>
               </div>
-  
-              <div class="file-upload-container">
+              
+              <input
+                  style="display: none"
+                  type="file" (change)="selectFileForPost($event)"
+                  #file3Input />
+              <div class="file-upload-container" (click)="file3Input.click()">
                 <p style="color:#666769">Upload Attachment</p>
               </div>
             </div>
@@ -256,7 +266,7 @@
                 <option disabled selected>Main Menu</option>
                 <option>Home</option>
                 <option>About Us</option>
-                <option>Facilities</option>
+                <option>Academics</option>
                 <option>Administration</option>
                 <option>Admission</option>
                 <option>Miscellaneous</option>
@@ -280,25 +290,27 @@
                     bullist numlist outdent indent table | removeformat | help'
                 }"
               ></editor>
-              
-            
-            <input
-                  style="display: none"
-                  type="file" (change)="selectImageForPost($event)"
-                  #imageInput />
 
-            <div class="upload-contaier" (click)="imageInput.click()">
-              <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage"/>
-                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
-                <p style="color:#666769">Upload Image</p>
-              </div>
-  
-              <div class="file-upload-container">
-                <p style="color:#666769">Upload Attachment</p>
-              </div>
-            </div>
-  
+              <div class="upload-contaier">
+                <input
+                    style="display: none"
+                    type="file" (change)="selectImageForPost($event)"
+                    #image4Input />
+                <div class="image-upload-container" (click)="image4Input.click()">
+                  <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                  <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                  <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
+                  <p style="color:#666769">Upload Image</p>
+                </div>
+                
+                <input
+                    style="display: none"
+                    type="file" (change)="selectFileForPost($event)"
+                    #file4Input />
+                <div class="file-upload-container" (click)="file4Input.click()">
+                  <p style="color:#666769">Upload Attachment</p>
+                </div>
+              </div>       
             </div>
             
           <div class="submit-btn-holder">
@@ -382,23 +394,26 @@
                 ></editor>
                 
               
-              <input
-                    style="display: none"
-                    type="file" (change)="selectImageForPost($event)"
-                    #imageInput />
-  
-              <div class="upload-contaier" (click)="imageInput.click()">
-                <div class="image-upload-container">
-                  <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
-                <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
-                <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
-                  <p style="color:#666769">Upload Image</p>
-                </div>
-    
-                <div class="file-upload-container">
-                  <p style="color:#666769">Upload Attachment</p>
-                </div>
-              </div>
+                <div class="upload-contaier">
+                  <input
+                      style="display: none"
+                      type="file" (change)="selectImageForPost($event)"
+                      #image5Input />
+                  <div class="image-upload-container" (click)="image5Input.click()">
+                    <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                    <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                    <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
+                    <p style="color:#666769">Upload Image</p>
+                  </div>
+                  
+                  <input
+                      style="display: none"
+                      type="file" (change)="selectFileForPost($event)"
+                      #file5Input />
+                  <div class="file-upload-container" (click)="file5Input.click()">
+                    <p style="color:#666769">Upload Attachment</p>
+                  </div>
+                </div> 
     
               </div>
               
@@ -691,13 +706,25 @@
                   style="display: none"
                   type="file" (change)="uploadImageForMember($event, member)"
                   #memberInput />
-                <img src="assets/homepage/Ellipse 1.png" width="60vw" height="60vw" (click)="memberInput.click()" *ngIf="!member.imageSrc"/>
+                <img src="assets/admin/user.png" width="60vw" height="60vw" (click)="memberInput.click()" *ngIf="!member.imageSrc"/>
                 <img [src]="member.imageSrc" width="60vw" height="60vw" style="border-radius:50%" (click)="memberInput.click()" *ngIf="member.imageSrc"/>
                 <input type="text" placeholder="Name" [(ngModel)]="member.name"/>
+                <!-- <selct name="comittee">
+                  <option>School Management Committee</option>
+                  <option>Disciplinary Committee: Staff</option>
+                  <option>Internal Complaints Committee: Sexual Harrassment of Women at Work Place</option>
+                  <option>PTA Members</option>
+                  <option>Local Purchase Committee Members</option>
+                  <option>School Website Committee Members</option>
+                  <option>Students Disciplinary Committee</option>
+                  <option>Admission COmmittee</option>
+                  <option>Committee to implement Students and Teachers Time Table</option>
+                  <option>PSCSO Implementation Committee</option>
+                </selct> -->
                 <input type="text" placeholder="Committee" [(ngModel)]="member.committee"/>
                 <input type="text" placeholder="Designation" [(ngModel)]="member.designation"/>
                 <input type="text" placeholder="Contact Number" [(ngModel)]="member.contactNumber"/>
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="removeMember(i)">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="removeMember(member.id, i)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

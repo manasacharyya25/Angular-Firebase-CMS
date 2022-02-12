@@ -82,7 +82,8 @@ export class PageComponent implements OnInit {
   }
 
   downloadAttachment() {
-    const gsReference = ref(this.fireStorage, `files/${this.pagePost.category}`);
+    let gsReference = ref(this.fireStorage, `files/${this.pagePost.attachmentUrl}`);
+    
     var x  = getBytes(gsReference).then((buffer: ArrayBuffer) => {
       let blob = new Blob([buffer]);
       let url = window.URL.createObjectURL(blob);

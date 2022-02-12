@@ -12,7 +12,8 @@
                     <div class="committee-name">School Management Committee</div>
                     <div class="members-container">
                         <div *ngFor="let member of schoolManagementCommittee" class="member">
-                            <img [src]="member.imageSrc" *ngIf="member.imageSrc" height="100px" width="100px" style="border-radius:50%; margin-bottom: 10px" />
+                            <img [src]="member.imageSrc" *ngIf="member.imageSrc" height="100vh" width="100vw" style="border-radius:50%; margin-bottom: 10px" />
+                            <img src="assets/admin/user.png" *ngIf="!member.imageSrc" height="100vh" width="100vw" style="border-radius:50%; margin-bottom: 10px" />
                             <span style="font-weight:700">{{member.name}}</span>
                             <span style="font-size:1vw">{{member.designation}}</span>
                             <span style="font-size:1vw">{{member.contactNumber}}</span>

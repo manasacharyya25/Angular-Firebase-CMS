@@ -32,7 +32,7 @@ export class MembersPageComponent implements OnInit {
     collectionData(q).forEach((response: DocumentData[])=> {
        response.forEach((member:any)=> {
          if(member.name!="Dont Delete") {
-           let newMember = new Member(member.name, member.committee, member.designation, member.contactNumber, member.imageName);
+           let newMember = new Member(member.id, member.name, member.committee, member.designation, member.contactNumber, member.imageName);
           if(member.imageName) {
             let imagePath = `members/${member.imageName}`
             this.utils.getImage(imagePath).then(response => {

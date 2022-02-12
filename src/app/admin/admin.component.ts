@@ -62,8 +62,8 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     let currentPostCategory = "Featured Content"
-    this.membersList = [new Member('', '', '', '', '')];
     await this.updateCurrentPost(currentPostCategory);
+    this.membersList = [];
   }
 
 // #region Common Functions
@@ -82,6 +82,10 @@ export class AdminComponent implements OnInit {
     this.formTitle =  name;
     if(this.formTitle=='Homepage') {
       this.updateCurrentPost('Featured Content')
+    }
+
+    if(this.formTitle=='Committee Members') {
+      this.loadMembersList();
     }
   }
 
@@ -122,7 +126,8 @@ export class AdminComponent implements OnInit {
         }
 
         if(this.postHasAttachment) {
-          this.utils.uploadAttachmentFile(this.attachmentFile, `files/${category}`)
+          let fileExtension = this.attachmentFile.name.split('.')[1];
+          this.utils.uploadAttachmentFile(this.attachmentFile, `files/${category}.${fileExtension}`)
           newPost.attachmentUrl = category;
         }
 
@@ -141,7 +146,6 @@ export class AdminComponent implements OnInit {
   selectFileForPost(event: any) {
     this.attachmentFile = event.target.files[0];
     this.postHasAttachment = true;
-
   }
 
   selectImageForPost(event: any) {
@@ -164,11 +168,6 @@ export class AdminComponent implements OnInit {
   async createNewPostByTitle() {
     let imageName =  "";
 
-    if(this.postHasImage) {
-      await this.uploadImageForPost(this.currentPostTitle)
-      imageName = this.currentPostTitle;
-    }
-
     let newPost =  new Post(UUID.UUID(),
                             this.currentPostTitle,
                             this.currentPostContent.value,
@@ -176,6 +175,18 @@ export class AdminComponent implements OnInit {
                             "Post",
                             this.newPostPage,
                             imageName);
+
+    if(this.postHasImage) {
+      await this.uploadImageForPost(this.currentPostTitle)
+      imageName = this.currentPostTitle;
+    }
+
+    if(this.postHasAttachment) {
+      let fileExtension = this.attachmentFile.name.split('.')[1];
+      this.utils.uploadAttachmentFile(this.attachmentFile, `files/${this.currentPostTitle}.${fileExtension}`)
+      newPost.attachmentUrl = `${this.currentPostTitle}.${fileExtension}`;
+    }
+    
     await setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
   }
 
@@ -201,9 +212,32 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  submitEditedPost() {
-    let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
-    setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
+  async submitEditedPost() {
+    let imageName =  "";
+
+    let newPost =  new Post(this.editPostId,
+                            this.currentPostTitle,
+                            this.currentPostContent.value,
+                            new Date().toLocaleDateString(), 
+                            "Post",
+                            this.editPostPage,
+                            imageName);
+
+    if(this.postHasImage) {
+      await this.uploadImageForPost(this.currentPostTitle)
+      imageName = this.currentPostTitle;
+    }
+
+    if(this.postHasAttachment) {
+      let fileExtension = this.attachmentFile.name.split('.')[1];
+      this.utils.uploadAttachmentFile(this.attachmentFile, `files/${this.currentPostTitle}.${fileExtension}`)
+      newPost.attachmentUrl = `${this.currentPostTitle}.${fileExtension}`;
+    }
+    
+    await setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
+
+    // let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Post", this.editPostPage);
+    // setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
   }
 
 
@@ -214,16 +248,12 @@ export class AdminComponent implements OnInit {
     setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.postToFirestore(newNotification));
   }
 
-  
-
-
   getNotificationsToEdit() {
     this.utils.getPostsByCategory("Notification").then((respone: Post[]) => {
       //TODO: Paginate Results or Just Search
       this.recentPosts = respone;
     });
   }
-
 
   async searchPost(search_term: string) {
     this.showEditPost = false;
@@ -238,9 +268,6 @@ export class AdminComponent implements OnInit {
   navigateToPost(title: string) {
     window.open(`/page?title=${title}`, '_blank');
   }
-
-  
-
   
   submitEditedNotification() {
     let editedPost =  new Post(this.editPostId, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", this.editPostPage);
@@ -266,7 +293,6 @@ export class AdminComponent implements OnInit {
       for(let f of event.target.files) {
         setTimeout(() => {
           let reader = new FileReader();
-          console.log(f);
           reader.readAsDataURL(f)
           reader.onloadend = ev => {
             this.selectedImagesDataUrl.push(reader.result)
@@ -275,18 +301,44 @@ export class AdminComponent implements OnInit {
           this.selectedImagesForGallery.push(safeUrl)
         }, 1000);
       }
-      console.log(this.selectedImagesForGallery);
-      console.log(this.selectedImagesDataUrl);
     }
   }
 
-  removeMember(i: number) {
-    this.membersList = this.membersList.slice(0, i).concat(this.membersList.slice(i+1))
-    console.log(i);
+  //#region Members Section
+
+  loadMembersList() {
+    const membersCollection = collection(this.fireStore, 'members');
+    let q = query(membersCollection);
+    collectionData(q).forEach((response: DocumentData[])=> {
+       response.forEach((member:any)=> {
+         if(member.name!="Dont Delete") {
+           let newMember = new Member(member.id, member.name, member.committee, member.designation, member.contactNumber, member.imageName);
+          if(member.imageName) {
+            let imagePath = `members/${member.imageName}`
+            this.utils.getImage(imagePath).then(response => {
+              newMember.imageSrc = response;
+            })
+          }
+          this.membersList.push(newMember)
+        }
+      })
+      if(this.membersList.length==0) {
+        this.membersList = [new Member('', '', '', '', '', '', '')];
+      }
+    })
+  }
+
+  removeMember(id: string, i: number) {
+    console.log(id); 
+    deleteDoc(doc(this.fireStore, "members", id));
+    this.membersList = this.membersList.filter(member => {
+      member.id != id;
+    })
+    // this.membersList = this.membersList.slice(0, i).concat(this.membersList.slice(i+1))
   }
 
   addNewMemberPlaceholder() {
-    this.membersList.push(new Member('','','','',''))
+    this.membersList.push(new Member('','','','','', '', ''))
   }
 
   uploadImageForMember(event: any, member: Member) {
@@ -314,13 +366,24 @@ export class AdminComponent implements OnInit {
 
   async submitMembersList() {
     this.membersList.forEach(async member => {
+      if(member.id!=null) {
+        await deleteDoc(doc(this.fireStore, "members", member.id));
+      }
+    })
+
+    this.membersList.forEach(async member => {
       let memberId = UUID.UUID();
       await setDoc(doc(this.fireStore, "members", memberId), FirebaseConverters.memberToFirestore(memberId, member)).then(response => console.log(response));
       if(member.imageName) {
         await this.utils.compressAndUploadFile(member.imageDataUrl, `members/${member.imageName}`);
       }
     })
+
+    this.router.navigate(['members'])
   }
+
+  //#endregion
+
 }
 
 

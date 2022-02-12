@@ -3,6 +3,10 @@
 @import "~swiper/scss/pagination";
 @import "~swiper/scss/navigation";
 
+* {
+  box-sizing: border-box;
+}
+
 .swiper {
   width: 100%;
   height: 100%;

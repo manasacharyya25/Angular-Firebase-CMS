@@ -12,7 +12,7 @@ export class TopbarComponent implements OnInit {
 
   navbarListMap: Map<String, String[]>;
   aboutUsLinks: String[] = [];
-  facilitiesLinks: String[] = [];
+  academicsLinks: String[] = [];
   administrationLinks: String[] = [];
   admissionLinks: String[] = [];
   miscellaneousLinks: String[] = [];
@@ -27,7 +27,7 @@ export class TopbarComponent implements OnInit {
     this.utils.getNavbarLinks().then((response: Map<String, String[]>) => {
       this.navbarListMap = response;
       this.aboutUsLinks = response.get('About Us') || [];
-      this.facilitiesLinks = response.get('Facilities') || [];
+      this.academicsLinks = response.get('Academics') || [];
       this.administrationLinks = response.get('Administration') || [];
       this.admissionLinks = response.get('Admission') || [];
       this.miscellaneousLinks = response.get('Miscellaneous') || [];
@@ -45,6 +45,13 @@ export class TopbarComponent implements OnInit {
     }
     else if(link=='Photo Gallery') {
       this.router.navigate(['images']);
+    }
+    else if(link=='Time Table') {
+      this.router.navigate(['page'], {
+        queryParams: {
+          title: 'School Timings'
+        }
+      });
     }
     else {
       this.router.navigate(['page'], { queryParams: {title: link}});
