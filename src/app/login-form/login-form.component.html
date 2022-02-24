@@ -1,0 +1,21 @@
+<div class="login-form-container">
+    <div class="left-form">
+        <div class="topbar-banner" (click)="navigateTo('')">
+            <img src="assets/homepage/logo.png" width="10%"/>
+            <div class="name-and-slogan">
+                <div class="name">Air Force School Chabua</div>
+                <div class="slogan">Strive For Excellence</div>
+            </div>
+        </div>
+        <div class="form">
+            <div class="title">Admin Portal Login</div>
+            <input matInput type="text" [(ngModel)]="email" placeholder="Enter Email Address" />
+            <input type="password" matInput [(ngModel)]="password" placeholder="Enter Password" (keydown)="onCredentialsEntered($event)"/>
+            <div class="submit-btn" (click)="login()">Login</div>
+        </div>
+    </div>
+    <div class="right-form"></div>
+</div>
+
+<notifier-container></notifier-container>
+<div *ngIf="showLoading" class="lds-ripple"><div></div><div></div></div>

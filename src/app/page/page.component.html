@@ -1,12 +1,16 @@
-<div class="homepage">
-    <div class="homepage-heroimage-container">
+<div class="page">
+    <div class="page-heroimage-container">
     </div>
 
-    <div class="homepage-content-container">
+    <div class="page-content-container">
         <app-topbar style="position: absolute; top: 10px; z-index: 5;"></app-topbar>
 
-        <div class="hmmessage-container" *ngIf="showPost">
-            <div class="hm-header">{{pagePost.title}}</div>
+        <div class="loading" *ngIf="!showPost">
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
+
+        <div class="post-container" *ngIf="showPost">
+            <div class="page-post-header">{{pagePost.title}}</div>
             <div style="padding:2vw 5vw; overflow: hidden;max-height: 70%;" >
                 <img [src]="postImage" width="100%" class="post-image" *ngIf="postImage&&!pagePost.content" style="padding: 1vw; margin-top: 3vh;"/>
 
@@ -23,7 +27,7 @@
         </div>
     </div>
 
-    <div class="homepage-bottom-container">
+    <div class="page-bottom-container">
         <div class="news-marquee-1">
             <div class="news-header">News & Updates</div>
             <marquee behavior="scroll" direction="up" scrollamount="5" >
@@ -78,7 +82,7 @@
             <div class="news-header">Contact Us</div>
             <div class="address">
                 <div>
-                    <img src="assets/homepage/address.png" width="10vw" />
+                    <img src="assets/page/address.png" width="10vw" />
                 </div>
                 <div style="margin-left:10px">
                     Air Force School, Chabua
@@ -89,7 +93,7 @@
             </div>
             <div class="address">
                 <div>
-                    <img src="assets/homepage/phone.png" width="10vw" />
+                    <img src="assets/page/phone.png" width="10vw" />
                 </div>
                 <div style="margin-left:10px">
                     +91 7364024752
@@ -97,7 +101,7 @@
             </div>
             <div class="address">
                 <div>
-                    <img src="assets/homepage/mail.png" width="10vw" />
+                    <img src="assets/page/mail.png" width="10vw" />
                 </div>
                 <div style="margin-left:10px">
                     AFSCHABUA@GMAIL.COM
@@ -106,10 +110,10 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5578.685025972904!2d95.12184028091902!3d27.475222906938484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x373f60be0e7f8449%3A0xcb5d92c1a38c998e!2sKENDRIYA%20VIDYALAYA%20AFS%20CHABUA!5e0!3m2!1sen!2sin!4v1639775602568!5m2!1sen!2sin" width="80%" height="300" allowfullscreen="" loading="lazy" style="border-radius: 10px;border:0;" class="non_mobile_devices"></iframe>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5578.685025972904!2d95.12184028091902!3d27.475222906938484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x373f60be0e7f8449%3A0xcb5d92c1a38c998e!2sKENDRIYA%20VIDYALAYA%20AFS%20CHABUA!5e0!3m2!1sen!2sin!4v1639775602568!5m2!1sen!2sin" width="100" height="100" allowfullscreen="" loading="lazy" style="border-radius: 10px;border:0;" class="mobile_only"></iframe>
             <div class="social-links">
-                <img src="assets/homepage/instagram.svg" width="15vw" height="15vw"/>
-                <img src="assets/homepage/facebook.svg"  width="15vw" height="15vw"/>
-                <img src="assets/homepage/twitter.svg"   width="15vw" height="15vw"/>
-                <img src="assets/homepage/linkedin.svg"  width="15vw" height="15vw"/>
+                <img src="assets/page/instagram.svg" width="15vw" height="15vw"/>
+                <img src="assets/page/facebook.svg"  width="15vw" height="15vw"/>
+                <img src="assets/page/twitter.svg"   width="15vw" height="15vw"/>
+                <img src="assets/page/linkedin.svg"  width="15vw" height="15vw"/>
             </div>
         </div>
     </div>
@@ -117,7 +121,7 @@
 
     <div class="footer">
         <div class="terms-of-use">Terms of Use . Privacy Policy</div>
-        <div class="copyright"><img src="assets/homepage/copyright.svg" width="15vw" height="15vw"/><span>2021 Air Force School Chabua</span> </div>
+        <div class="copyright"><img src="assets/page/copyright.svg" width="15vw" height="15vw"/><span>2021 Air Force School Chabua</span> </div>
     </div>
 
 </div>

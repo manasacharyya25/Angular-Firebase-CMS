@@ -8,6 +8,7 @@
       <mat-sidenav-content class="sidenav-content" (click)="showForm('Image Upload')">Image Upload</mat-sidenav-content>
       <!-- <mat-sidenav-content class="sidenav-content" (click)="showForm('Site Details')">Site Details</mat-sidenav-content> -->
       <mat-sidenav-content class="sidenav-content" (click)="showForm('Committee Members')">Committee Members</mat-sidenav-content>
+      <mat-sidenav-content class="sidenav-content" (click)="signOut()">Sign Out&nbsp; <mat-icon>power_settings_new</mat-icon></mat-sidenav-content>
     </mat-sidenav-container>
   </mat-drawer>
 
@@ -64,7 +65,8 @@
                     type="file" (change)="selectFileForPost($event)"
                     #file1Input />
                 <div class="file-upload-container" (click)="file1Input.click()">
-                  <p style="color:#666769">Upload Attachment</p>
+                  <div  style="color:#666769; display: flex; align-items: center;" *ngIf="postHasAttachment||attachmentFileName"><mat-icon>insert_drive_file</mat-icon>&nbsp;{{attachmentFileName}}</div><br />
+                  <p *ngIf="!postHasAttachment&&!attachmentFileName" style="color:#666769; display: flex; align-items: center;"><mat-icon> attach_file</mat-icon> &nbsp; Upload Attachment</p>
                 </div>
               </div>
   
@@ -88,7 +90,7 @@
             </div>
             
             <div class="editor-container">
-              <editor [formControl]="currentPostContent"
+              <editor apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf" [formControl]="currentPostContent"
               [init]="{
                 height: 500,
                 menubar: false,
@@ -121,7 +123,8 @@
                   type="file" (change)="selectFileForPost($event)"
                   #file1Input />
               <div class="file-upload-container" (click)="file1Input.click()">
-                <p style="color:#666769">Upload Attachment</p>
+                <div  style="color:#666769; display: flex; align-items: center;" *ngIf="postHasAttachment||attachmentFileName"><mat-icon>insert_drive_file</mat-icon>&nbsp;{{attachmentFileName}}</div><br />
+                  <p *ngIf="!postHasAttachment&&!attachmentFileName" style="color:#666769; display: flex; align-items: center;"><mat-icon> attach_file</mat-icon> &nbsp; Upload Attachment</p>
               </div>
             </div>
   
@@ -145,7 +148,7 @@
             </div>
             
             <div class="editor-container">
-              <editor [formControl]="currentPostContent"
+              <editor apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf" [formControl]="currentPostContent"
               [init]="{
                 height: 500,
                 menubar: false,
@@ -178,7 +181,8 @@
                   type="file" (change)="selectFileForPost($event)"
                   #file2Input />
               <div class="file-upload-container" (click)="file2Input.click()">
-                <p style="color:#666769">Upload Attachment</p>
+                <div  style="color:#666769; display: flex; align-items: center;" *ngIf="postHasAttachment||attachmentFileName"><mat-icon>insert_drive_file</mat-icon>&nbsp;{{attachmentFileName}}</div><br />
+                  <p *ngIf="!postHasAttachment&&!attachmentFileName" style="color:#666769; display: flex; align-items: center;"><mat-icon> attach_file</mat-icon> &nbsp; Upload Attachment</p>
               </div>
             </div>
   
@@ -202,7 +206,7 @@
             </div>
             
             <div class="editor-container">
-              <editor [formControl]="currentPostContent"
+              <editor apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf" [formControl]="currentPostContent"
               [init]="{
                 height: 500,
                 menubar: false,
@@ -235,7 +239,8 @@
                   type="file" (change)="selectFileForPost($event)"
                   #file3Input />
               <div class="file-upload-container" (click)="file3Input.click()">
-                <p style="color:#666769">Upload Attachment</p>
+                <div  style="color:#666769; display: flex; align-items: center;" *ngIf="postHasAttachment||attachmentFileName"><mat-icon>insert_drive_file</mat-icon>&nbsp;{{attachmentFileName}}</div><br />
+                  <p *ngIf="!postHasAttachment&&!attachmentFileName" style="color:#666769; display: flex; align-items: center;"><mat-icon> attach_file</mat-icon> &nbsp; Upload Attachment</p>
               </div>
             </div>
   
@@ -274,7 +279,7 @@
             </div>
             
             <div class="editor-container">
-                <editor
+                <editor apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf"
                 [formControl]="currentPostContent"
                 [init]="{
                   height: 500,
@@ -332,12 +337,12 @@
 
             <div class="search-resultset" *ngIf="!showSearchResults&&!showEditPost">
               <div class="search-result" *ngFor="let post of recentPosts">
-                <div style="min-width: 100px;">{{post.title}}</div>
+                <div style="min-width: 400px;">{{post.title}}</div>
                 <div>{{post.date}}</div>
                 <div>
                   <img src="assets/admin/external-link.svg" alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(post.title)"/>
                   <img src="assets/admin/edit.svg" alt="Edit" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="editPost(post)"/>
-                  <img src="assets/admin/trash.svg" alt="Delete" height="15px" style="cursor: pointer;"/>
+                  <img src="assets/admin/trash.svg" alt="Delete" height="15px" style="cursor: pointer;" (click)="deletePost(post)"/>
                 </div>
               </div>
             </div>
@@ -349,7 +354,7 @@
                 <div>
                   <img src="assets/admin/external-link.svg"  alt="Open" height="15px" style="margin-right: 10px;cursor: pointer;" (click)="navigateToPost(searchResult.title)"/>
                   <img src="assets/admin/edit.svg" height="15px" alt="Edit" style="margin-right: 10px;cursor: pointer;" (click)="editPost(searchResult)"/>
-                  <img src="assets/admin/trash.svg" height="15px" alt="Delete" style="cursor: pointer;"/>
+                  <img src="assets/admin/trash.svg" height="15px" alt="Delete" style="margin-right: 10px;cursor: pointer;" (click)="deletePost(searchResult)"/>
                 </div>
               </div>
 
@@ -364,19 +369,11 @@
               <div class="input-div">
                 <label>Title</label>
                 <input type="text" [(ngModel)]="currentPostTitle"/>
-                <select [(ngModel)]="editPostPage">
-                  <option disabled selected>Main Menu</option>
-                  <option>Home</option>
-                  <option>About Us</option>
-                  <option>Facilities</option>
-                  <option>Administration</option>
-                  <option>Admission</option>
-                  <option>Miscellaneous</option>
-                </select>
               </div>
               
               <div class="editor-container">
                   <editor
+                  apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf"
                   [formControl]="currentPostContent"
                   [init]="{
                     height: 500,
@@ -443,6 +440,7 @@
             
             <div class="editor-container">
                 <editor
+                apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf"
                 [formControl]="currentPostContent"
                 [init]="{
                   height: 500,
@@ -459,21 +457,27 @@
                 }"
               ></editor>
             
-            <input
-                  style="display: none"
-                  type="file" (change)="selectImageForPost($event)"
-                  #imageInput />
-
-            <div class="upload-contaier" (click)="imageInput.click()">
-              <div class="image-upload-container">
-                <img src="assets/admin/image.png" width="100vw"/>
-                <p style="color:#666769">Upload Image</p>
+            <div class="upload-contaier">
+                <input
+                    style="display: none"
+                    type="file" (change)="selectImageForPost($event)"
+                    #image7Input />
+                <div class="image-upload-container" (click)="image7Input.click()">
+                  <img src="assets/admin/image.png" width="100vw" *ngIf="!currentPostImage&&!imageLoading"/>
+                  <div class="lds-facebook" *ngIf="imageLoading"><div></div><div></div><div></div></div>
+                  <img [src]="currentPostImage" width="100%" height="90%" *ngIf="currentPostImage" />
+                  <p style="color:#666769">Upload Image</p>
+                </div>
+                
+                <input
+                    style="display: none"
+                    type="file" (change)="selectFileForPost($event)"
+                    #file7Input />
+                <div class="file-upload-container" (click)="file7Input.click()">
+                  <div  style="color:#666769; display: flex; align-items: center;" *ngIf="postHasAttachment||attachmentFileName"><mat-icon>insert_drive_file</mat-icon>&nbsp;{{attachmentFileName}}</div><br />
+                  <p *ngIf="!postHasAttachment&&!attachmentFileName" style="color:#666769; display: flex; align-items: center;"><mat-icon> attach_file</mat-icon> &nbsp; Upload Attachment</p>
+                </div>
               </div>
-  
-              <div class="file-upload-container">
-                <p style="color:#666769">Upload Attachment</p>
-              </div>
-            </div>
   
             </div>
             
@@ -532,6 +536,7 @@
               
               <div class="editor-container">
                   <editor
+                  apiKey="h4fw2mcf65r1n5v3p5fcqqe90mjv0g4r1z9asec4t1bqeknf"
                   [formControl]="currentPostContent"
                   [init]="{
                     height: 500,

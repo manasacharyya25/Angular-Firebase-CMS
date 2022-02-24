@@ -1,5 +1,5 @@
 import { Injectable, SecurityContext } from '@angular/core';
-import { collection, collectionData, DocumentData, Firestore, limit, orderBy, query, where } from '@angular/fire/firestore';
+import { collection, collectionData, doc, DocumentData, Firestore, getDoc, limit, orderBy, query, setDoc, where } from '@angular/fire/firestore';
 import { getBytes, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { list, listAll } from '@firebase/storage';
@@ -137,6 +137,58 @@ export class Utils {
     });
   }
 
+  async createNewPageInNavbar(currentPostTitle: string, newPostPage: string) {
+    let menuIds =  new Map<string, string>();
+    menuIds.set("Admission", "JcXcSpLhRcqBpGGCbFhu")
+    menuIds.set("Administration", "QZqDxbgNWs0REYHiFLkn")
+    menuIds.set("Academics", "S9QreURHigWQOxvba8DN")
+    menuIds.set("Miscellaneous", "bQySVR0vx1PZpaTl6prg")
+    menuIds.set("About Us", "d9RMYPpiC2zZMt7RayVK")
+
+
+    const docRef = doc(this.fireStore, "navbar",menuIds.get(newPostPage)||"");
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      let docSnap2 = docSnap.data();
+
+      const index = docSnap2["sublinks"].indexOf(currentPostTitle, 0);
+      console.log(index)
+      if(index>-1) {
+        docSnap2["sublinks"].push(currentPostTitle)
+        setDoc(doc(this.fireStore, "navbar", menuIds.get(newPostPage)||""), docSnap2);
+      }
+    } else {
+      console.log("No such document!");
+    }
+  }
+
+  async deletePageFromNavbar(currentPostTitle: string, newPostPage: string) {
+    let menuIds =  new Map<string, string>();
+    menuIds.set("Admission", "JcXcSpLhRcqBpGGCbFhu")
+    menuIds.set("Administration", "QZqDxbgNWs0REYHiFLkn")
+    menuIds.set("Academics", "S9QreURHigWQOxvba8DN")
+    menuIds.set("Miscellaneous", "bQySVR0vx1PZpaTl6prg")
+    menuIds.set("About Us", "d9RMYPpiC2zZMt7RayVK")
+
+
+    const docRef = doc(this.fireStore, "navbar",menuIds.get(newPostPage)||"");
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      let docSnap2 = docSnap.data();
+
+      const index = docSnap2["sublinks"].indexOf(currentPostTitle, 0);
+      if (index > -1) {
+        docSnap2["sublinks"].splice(index, 1);
+      }
+
+      setDoc(doc(this.fireStore, "navbar", menuIds.get(newPostPage)||""), docSnap2);
+    } else {
+      console.log("No such document!");
+    }
+  }
+
   async compressAndUploadFile(imageBeforCompress: DataUrl, fileName: string) {
     let imgSize = this.imageCompress.byteCount(imageBeforCompress);
 
@@ -208,7 +260,5 @@ export class Utils {
       console.log(snapshot);
     });
   }
-
-
 
 }

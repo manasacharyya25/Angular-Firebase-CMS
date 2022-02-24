@@ -13,9 +13,6 @@
     z-index: 0;
     width: 100%;
     height: 85%;
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background-image: url("/assets/homepage/history.png");
 }
 
 .homepgae-mid-container {
@@ -303,4 +300,70 @@
 
 .copyright > span {
     margin-right: 1vw;
+}
+
+
+// Tablets
+@media screen and (max-width: 768px) {
+    .homepage-heroimage-container {
+        height: 60%;
+    }
+
+    .homepgae-mid-container {
+        margin-top: 50vh;
+    }
+
+    .red-bar-1 {
+        min-height: 54vw;
+    }
+}
+
+
+// Mobile Phones
+@media screen and (max-width: 480px) {
+    .homepage-heroimage-container {
+        height: 35%;
+    }
+
+    .homepgae-mid-container {
+        margin-top: 25vh;
+    }
+
+    .hmmessage-container {
+        display: flex;
+        flex-direction: column;
+        width: 65vw;
+        height: 120%;
+        background-color: white;
+        border-radius: 0 0 10px 10px;
+        color: #434343;
+        font-family: "Libre Franklin", sans-serif;
+        font-weight: 400;
+        font-size: 2.3vw;
+        line-height: 2.5vw;
+    }
+
+    .homepage-toppost {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10vw;
+        position: relative;
+        z-index: 1;
+        flex-wrap: wrap;
+    }
+
+    .toppost-box {
+        width: 40vw;
+        height: auto;
+        margin-right: 2vw;
+    }
+
+    .homepage-comittee {
+        margin-top: 25vh;
+    }
+
+    .red-bar-1 {
+        min-height: 54vw;
+    }
 }

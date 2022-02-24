@@ -30,8 +30,9 @@
 .sidenav-content {
     width: inherit;
     padding: 1vw 1.5vw;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;

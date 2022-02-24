@@ -7,34 +7,77 @@
         </div>
     </div>
 
-    <div class="topbar-navbar" *ngIf="showNavbar">
-        <div class="navbar-link" style="border-radius: 5px 0 0 5px; padding:1vw" (click)="navigateTo('')">&nbsp;Home&nbsp;</div>
-
-        <div class="navbar-link">
-            &nbsp;About Us&nbsp;
-            <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of aboutUsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+    <div class="non_mobile_devices">
+        <div class="topbar-navbar" *ngIf="showNavbar">
+            <div class="navbar-link" style="border-radius: 5px 0 0 5px; padding:1vw" (click)="navigateTo('')">&nbsp;Home&nbsp;</div>
+    
+            <div class="navbar-link">
+                &nbsp;About Us&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of aboutUsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
             </div>
-        </div>
-        <div class="navbar-link">&nbsp;Academics&nbsp;
-            <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of academicsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+            <div class="navbar-link">&nbsp;Academics&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of academicsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
             </div>
-        </div>
-        <div class="navbar-link">&nbsp;&nbsp;Administration&nbsp;&nbsp;
-            <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of administrationLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+            <div class="navbar-link">&nbsp;&nbsp;Administration&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of administrationLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
             </div>
-        </div>
-        <div class="navbar-link">&nbsp;&nbsp;Admission&nbsp;&nbsp;
-            <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of admissionLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+            <div class="navbar-link">&nbsp;&nbsp;Admission&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of admissionLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
             </div>
-        </div>
-        <div class="navbar-link" style="border-radius: 0 5px 5px 0;">&nbsp;Miscellaneous&nbsp;&nbsp;
-            <div class="sublink">
-                <li class="navbar-links" *ngFor="let link of miscellaneousLinks" (click)="navigateTo('images')">{{link}}</li>
+            <div class="navbar-link" style="border-radius: 0 5px 5px 0;">&nbsp;Miscellaneous&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of miscellaneousLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="mobile_only">
+        <div class="mobile-navigation-container">
+            <div class="hamburger" (click)="showMobileNavigation()">
+                <img src="assets/homepage/hamburger.svg" height="20vh" />
+            </div>
+
+            <div class="mobile-navbar" *ngIf="showMobileNavBar">
+                <div class="navbar-link" style="border-radius: 5px 0 0 5px; padding:1vw" (click)="navigateTo('')">&nbsp;Home&nbsp;</div>
+    
+            <div class="navbar-link">
+                &nbsp;About Us&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of aboutUsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
+            </div>
+            <div class="navbar-link">&nbsp;Academics&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of academicsLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
+            </div>
+            <div class="navbar-link">&nbsp;&nbsp;Administration&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of administrationLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
+            </div>
+            <div class="navbar-link">&nbsp;&nbsp;Admission&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of admissionLinks" (click)="navigateToPageWithTitle(link)">{{link}}</li>
+                </div>
+            </div>
+            <div class="navbar-link" style="border-radius: 0 5px 5px 0;">&nbsp;Miscellaneous&nbsp;&nbsp;
+                <div class="sublink">
+                    <li class="navbar-links" *ngFor="let link of miscellaneousLinks" (click)="navigateTo('images')">{{link}}</li>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    
 </div>

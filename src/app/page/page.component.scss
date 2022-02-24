@@ -1,10 +1,12 @@
-.homepage {
+.page {
     width: 100%;
-    height: auto;
-    background-color: #222222;
+    min-height: 100vh;
+    background-image: linear-gradient(#044a70,rgba(239,244,247,0.88));
+    background-blend-mode: normal;
+    box-sizing: border-box;
 }
 
-.homepage-heroimage-container {
+.page-heroimage-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -13,11 +15,10 @@
     height: 85%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("/assets/homepage/hero.png");
+    background-image: url("/assets/hero-slider/1.jpg");
 }
 
-
-.homepage-content-container {
+.page-content-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -25,7 +26,7 @@
     padding: 20px 50px;
 }
 
-.hmmessage-container {
+.post-container {
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -43,7 +44,7 @@
     margin-top: 15vw;
 }
 
-.hm-header {
+.page-post-header {
     background-color: #222222;
     width: inherit;
     height: 5vw;
@@ -62,7 +63,7 @@
     padding: 1vw 2vw;
 }
 
-.homepage-bottom-container {
+.page-bottom-container {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -241,4 +242,62 @@
         background-color: #51565f;
         color: white;
     }
+}
+
+@media screen and (max-width: 480px) {
+    .page-heroimage-container {
+        height: 45%;
+    }
+
+    .post-container {
+        display: flex;
+        align-self: center;
+        flex-direction: column;
+        width: 95vw;
+        min-height: 50vw;
+        background-color: white;
+        border-radius: 0 0 10px 10px;
+        color: #434343;
+        font-family: 'Libre Franklin', sans-serif;
+        font-weight: 300;
+        font-size: 3.5vw;
+        line-height: 1.2;
+        position: relative;
+        z-index: 1;
+        margin-top: 15vw;
+    }
+
+    .post-image {
+        width: 100%;
+        height: auto;
+    }
+    
+    .page-post-header {
+        background-color: #222222;
+        width: inherit;
+        min-height: 5vw;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: Playfair Display SC;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 4vw;
+        line-height: 1;
+        color: white;
+        text-align: justify;
+        letter-spacing: 0.095em;
+        text-transform: capitalize;
+        padding: 4vw;
+    }
+}
+
+.loading {
+    margin-top: 15vw;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: saturate(180%) blur(10px);
 }

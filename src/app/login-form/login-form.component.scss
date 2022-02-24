@@ -1,0 +1,126 @@
+.login-form-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    z-index: 1;
+}
+
+.left-form {
+    display: flex;
+    width: 50%;
+    min-height: 100vh;
+
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: linear-gradient(#044a70,rgba(239,244,247,0.88));
+}
+
+.right-form {
+    display: flex;
+    width: 50%;
+    min-height: 100vh;
+
+    background-image: url('/assets/hero-slider/1.jpg');
+    background-size: cover;
+}
+
+.topbar-banner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    cursor: pointer;
+    padding:1vw;
+}
+
+.name-and-slogan {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 1%;
+}
+
+.name {
+    font-family: Playfair Display SC;
+    // font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+    text-transform: capitalize;
+    color: #ffffff;
+}
+
+.slogan {
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    color: #ffffff;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top:30%;
+}
+
+input {
+    padding: 1vw 2vw;
+    border: 0px;
+    border-radius: 5px;
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1vw;
+    line-height: 1.5vw;
+    margin-bottom: 1vh;
+}
+
+.submit-btn {
+    margin-top: 1vw;
+    background-color: #0248ca;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 0.7vw;
+    border-radius: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(110%);
+    }
+}
+
+.title {
+    font-family: Playfair Display SC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.5vw;
+    line-height: 1.5vw;
+    text-transform: capitalize;
+    color: #ffffff;
+    margin-bottom: 1vh;
+}
+
+.lds-ripple {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    z-index: 2;
+}

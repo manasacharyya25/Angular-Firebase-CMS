@@ -13,6 +13,7 @@ import { deleteDoc, setDoc } from '@firebase/firestore';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
 import { Member } from '../common/member.model';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-admin',
@@ -49,13 +50,15 @@ export class AdminComponent implements OnInit {
   currentPostCategory: string;
   postHasAttachment: boolean;
   attachmentFile: any;
+  attachmentFileName: string;
 
   
   constructor(private router: Router, 
     private fireStore: Firestore, 
     private fireStorage: Storage, 
     private utils: Utils,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private auth: Auth) {
     this.formTitle = "Homepage"
     this.currentPostContent = new FormControl("");
    }
@@ -73,6 +76,36 @@ export class AdminComponent implements OnInit {
   this.currentPostTitle = '';
   this.currentPostContent = new FormControl('');
  }
+
+ signOut() {
+   this.auth.signOut().then(response => {
+     this.router.navigate(['login']);
+   });
+ }
+
+ selectFileForPost(event: any) {
+  this.attachmentFile = event.target.files[0];
+  this.attachmentFileName = this.attachmentFile.name;
+  this.postHasAttachment = true;
+}
+
+selectImageForPost(event: any) {
+  this.imageFile = event.target.files[0];
+  this.currentPostImage = this.utils.getSafeUrlForSelectedImage(this.imageFile);
+  this.postHasImage = true;
+}
+
+async uploadImageForPost(postName: string) {
+  var imageDataUrl: string = '';
+
+  var reader = new FileReader();
+  reader.readAsDataURL(this.imageFile)
+  reader.onload = async ev => {
+    imageDataUrl = reader.result?.toString() || '';
+    await this.utils.compressAndUploadFile(imageDataUrl, postName);
+  }
+}
+
 //#endregion
 
 //#region  Sidebar Functions
@@ -111,14 +144,19 @@ export class AdminComponent implements OnInit {
             this.imageLoading = false;
           });
         }
+
+        if(currentPost.attachmentUrl && currentPost.attachmentUrl!="") {
+          this.attachmentFileName = currentPost.attachmentUrl;
+        }
       })
     }
   }
 
-  submitHomepagePost(category: string) {
+  submitHomePagePost(category: string) {
     this.utils.getPostByCategory(category).then(post=> {
       if(post.title || post.content || post.imageUrl || post.attachmentUrl || post.category) {
-        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), category, "Homepage");
+        let newPost =  new Post(post.id, this.currentPostTitle, this.currentPostContent.value, 
+          new Date().toLocaleDateString(), category, "Homepage", post.imageUrl, post.attachmentUrl);
 
         if(this.postHasImage) {
           this.uploadImageForPost(category)
@@ -128,7 +166,7 @@ export class AdminComponent implements OnInit {
         if(this.postHasAttachment) {
           let fileExtension = this.attachmentFile.name.split('.')[1];
           this.utils.uploadAttachmentFile(this.attachmentFile, `files/${category}.${fileExtension}`)
-          newPost.attachmentUrl = category;
+          newPost.attachmentUrl = `${category}.${fileExtension}`;
         }
 
         setDoc(doc(this.fireStore, "posts", post.id), FirebaseConverters.postToFirestore(newPost));
@@ -143,28 +181,6 @@ export class AdminComponent implements OnInit {
 
 // #region Post
 
-  selectFileForPost(event: any) {
-    this.attachmentFile = event.target.files[0];
-    this.postHasAttachment = true;
-  }
-
-  selectImageForPost(event: any) {
-    this.imageFile = event.target.files[0];
-    this.currentPostImage = this.utils.getSafeUrlForSelectedImage(this.imageFile);
-    this.postHasImage = true;
-  }
-
-  async uploadImageForPost(postName: string) {
-    var imageDataUrl: string = '';
-
-    var reader = new FileReader();
-    reader.readAsDataURL(this.imageFile)
-    reader.onload = async ev => {
-      imageDataUrl = reader.result?.toString() || '';
-      await this.utils.compressAndUploadFile(imageDataUrl, postName);
-    }
-  }
-
   async createNewPostByTitle() {
     let imageName =  "";
 
@@ -178,7 +194,7 @@ export class AdminComponent implements OnInit {
 
     if(this.postHasImage) {
       await this.uploadImageForPost(this.currentPostTitle)
-      imageName = this.currentPostTitle;
+      newPost.imageUrl = this.currentPostTitle;
     }
 
     if(this.postHasAttachment) {
@@ -188,6 +204,8 @@ export class AdminComponent implements OnInit {
     }
     
     await setDoc(doc(this.fireStore, "posts", newPost.id), FirebaseConverters.postToFirestore(newPost));
+
+    await this.utils.createNewPageInNavbar(this.currentPostTitle, this.newPostPage);
   }
 
   getPostsToEdit() {
@@ -225,7 +243,7 @@ export class AdminComponent implements OnInit {
 
     if(this.postHasImage) {
       await this.uploadImageForPost(this.currentPostTitle)
-      imageName = this.currentPostTitle;
+      newPost.imageUrl = this.currentPostTitle;
     }
 
     if(this.postHasAttachment) {
@@ -240,11 +258,30 @@ export class AdminComponent implements OnInit {
     // setDoc(doc(this.fireStore, "posts", this.editPostId), FirebaseConverters.postToFirestore(editedPost));
   }
 
+  deletePost(post: Post) {
+    console.log(post);
+    let docRef = doc(this.fireStore, "posts", post.id);
+    this.utils.deletePageFromNavbar(post.title, post.page)
+    deleteDoc(docRef);
+  } 
+
 
   //#endregion
 
-  createNewNotification() {
+  async createNewNotification() {
     let newNotification =  new Post(UUID.UUID(), this.currentPostTitle, this.currentPostContent.value, new Date().toLocaleDateString(), "Notification", "");
+    
+    if(this.postHasImage) {
+      await this.uploadImageForPost(this.currentPostTitle)
+      newNotification.imageUrl = this.currentPostTitle;
+    }
+
+    if(this.postHasAttachment) {
+      let fileExtension = this.attachmentFile.name.split('.')[1];
+      this.utils.uploadAttachmentFile(this.attachmentFile, `files/${this.currentPostTitle}.${fileExtension}`)
+      newNotification.attachmentUrl = `${this.currentPostTitle}.${fileExtension}`;
+    }
+    
     setDoc(doc(this.fireStore, "posts", newNotification.id), FirebaseConverters.postToFirestore(newNotification));
   }
 

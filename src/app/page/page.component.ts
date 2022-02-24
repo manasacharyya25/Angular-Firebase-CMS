@@ -88,7 +88,7 @@ export class PageComponent implements OnInit {
       let blob = new Blob([buffer]);
       let url = window.URL.createObjectURL(blob);
       var anchor = document.createElement("a");
-      anchor.download = `${this.pagePost.title}.pdf`;
+      anchor.download = `${this.pagePost.attachmentUrl}`;
       anchor.href = url;
       anchor.click();
     });

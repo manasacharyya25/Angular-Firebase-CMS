@@ -11,7 +11,7 @@ export class Post {
     imageUrl: SafeUrl|string|undefined;
     attachmentUrl: string|undefined;
 
-    public constructor(id: string, title: string, content: string, date: string, category: string, page: string, imageUrl?: string, attachmentUrl?: string) {
+    public constructor(id: string, title: string, content: string, date: string, category: string, page: string, imageUrl?: string|SafeUrl, attachmentUrl?: string) {
         this.id = id;
         this.title = title;
         this.content = content;

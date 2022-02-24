@@ -17,6 +17,7 @@ export class TopbarComponent implements OnInit {
   admissionLinks: String[] = [];
   miscellaneousLinks: String[] = [];
   showNavbar: boolean;
+  showMobileNavBar: boolean;
 
   constructor(private router: Router, private utils: Utils) { }
 
@@ -40,8 +41,19 @@ export class TopbarComponent implements OnInit {
   }
 
   navigateToPageWithTitle(link: string) {
-    if(link=='Management Committee' || link=='Staff'){
-      this.router.navigate(['members']);
+    if(link=='Management Committee' ){
+      this.router.navigate(['members'], {
+        queryParams : {
+          type: 'committee'
+        }
+      });
+    }
+    else if(link=='Staff') {
+      this.router.navigate(['members'], {
+        queryParams: {
+          type: 'staff'
+        }
+      })
     }
     else if(link=='Photo Gallery') {
       this.router.navigate(['images']);
@@ -56,6 +68,11 @@ export class TopbarComponent implements OnInit {
     else {
       this.router.navigate(['page'], { queryParams: {title: link}});
     }
+  }
+
+  showMobileNavigation() {
+    this.showMobileNavBar = !this.showMobileNavBar;
+    console.log(this.showMobileNavBar)
   }
 
 }

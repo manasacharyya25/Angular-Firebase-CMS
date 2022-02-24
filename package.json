@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "@tinymce/tinymce-angular": "^4.2.4",
+    "angular-notifier": "^11.0.0",
     "angular2-uuid": "^1.1.1",
     "ng-gallery": "^6.0.0",
     "ngx-image-compress": "^13.1.6",
